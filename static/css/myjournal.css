@@ -1,0 +1,87 @@
+.trace-search-bar {
+	padding: 0px 10px 0px 10px;
+}
+.place-card {
+	height: 200px;
+	position: relative;
+}
+.place-info {
+	position: absolute;
+	left:20px;
+	top:40px;
+}
+
+.place-card-img {
+	width: 100%;
+	height: 100%;
+}
+
+.place-datetime {
+	color: #5E677A;
+	font-size: 12px;
+	background-color: #EFF3F6;
+}
+.place-name {
+	color: #fff;
+	font-size: 16px;
+}
+
+.small-icon {
+	font-size: 18px;
+}
+
+.detail-img-section {
+	width: 100%;
+	height: 250px;
+	margin-bottom: 2px;
+}
+.place-detail-datetime {
+	color: #fff;
+	font-size: 12px;
+	position:absolute;
+	left: 5px;
+	top: 5px;
+}
+.detail-large-img {
+	width:100%;
+	height: 100%;
+}
+.share-options {
+	padding: 10px 0px 10px 10px;
+	background-color: #FFF;
+	margin-bottom: 5px;
+}
+.detail-info-session {
+	margin-top: 10px;
+}
+.travel-party {
+	padding: 10px 0px 5px 10px;
+	background-color: #EFF3F6;
+	margin: 5px 0px 5px 0px;
+}
+.place-detail-section-title {
+	font-size: 14px;
+	color: #8f8f94;
+}
+
+.user-profile-name {
+	font-size: 12px;
+	color: #5E677A;
+}
+.user-profile-pic {
+	border-radius: 150px;
+}
+.place-comments {
+	margin: 5px 0px 0px 0px;
+}
+.place-comments p {
+	font-size: 11px;
+}
+.place-map {
+	height:200px;
+}
+#place-map-canvas {
+	width: 100%;
+	height: 200px;
+	margin: auto;
+}

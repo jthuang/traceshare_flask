@@ -1,0 +1,109 @@
+.trace-search-form {
+	padding: 0px 10px 0px 10px;
+}
+
+.place-card {
+	height: 200px;
+	position: relative;
+}
+.place-info {
+	position: absolute;
+	left:20px;
+	top:40px;
+}
+
+.place-card-img {
+	width: 100%;
+	height: 100%;
+}
+
+.place-datetime {
+	color: #5E677A;
+	font-size: 12px;
+	background-color: #EFF3F6;
+}
+.place-name {
+	color: #fff;
+	font-size: 16px;
+	background-color:rgba(0,0,0,0.1);
+	width:100%;
+}
+
+.small-icon {
+	font-size: 18px;
+}
+
+.detail-img-section {
+	width: 100%;
+	height: 250px;
+	margin-bottom: 2px;
+}
+
+/* WX: removed. Put place detail datetime above place large image;
+.place-detail-datetime {
+	color: #fff;
+	font-size: 12px;
+	position:absolute;
+	left: 5px;
+	top: 5px;
+}*/
+.detail-large-img {
+	width:100%;
+	height: 100%;
+}
+.detail-thumb-img {
+	width: 70px;
+	height: 70px;
+}
+.detail-share-section {
+	/*padding: 10px 0px 10px 10px;*/
+	background-color: #FFF;
+	margin-bottom: 5px;
+}
+.detail-info-section {
+	margin-top: 10px;
+}
+.detail-travel-party-section{
+	padding: 10px 0px 5px 10px;
+	background-color: #EFF3F6;
+	margin: 5px 0px 5px 0px;
+}
+.place-detail-section-title {
+	font-size: 14px;
+	color: #8f8f94;
+}
+
+.user-profile-name {
+	font-size: 12px;
+	color: #5E677A;
+}
+.user-profile-pic {
+	border-radius: 150px;
+}
+.place-comments {
+	margin: 5px 0px 0px 0px;
+}
+.place-comments p {
+	font-size: 11px;
+}
+.place-map {
+	height:200px;
+	width:350px;
+}
+#place-map-canvas {
+	width: 100%;
+	height: 100%;
+	margin: auto;
+}
+.trace-map {
+	height:500px;
+	width:350px;
+}
+#trace-map-canvas {
+	width: 100%;
+	height: 100%;
+	/*margin: 0px;*/
+}
+#self-comment {
+	background-color: #DDE4B5;
+}
