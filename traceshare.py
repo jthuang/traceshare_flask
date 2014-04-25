@@ -1,7 +1,7 @@
-import os
-from flask import Flask
+import flask
+from os import environ
 
-app = Flask(__name__)
+app = flask.Flask(__name__)
 app.debug = True
 
 @app.route('/')
@@ -14,3 +14,7 @@ def get_my_place:
     resp = flask.make_response(flask.render_template('myPlaces.html')
 
     return resp
+
+
+if __name__ == "__main__":
+    app.run(port=int(environ['FLASK_PORT']))
