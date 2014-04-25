@@ -16,7 +16,7 @@ def hello():
 
 @app.route('/myplace', methods=["GET"])
 def get_my_place():
-    app.logger.debug("Redirecting to " + destination)
+    app.logger.debug("Accessing myPlace.html")
     resp = flask.make_response(flask.render_template('myPlaces.html'))
 
     return resp
