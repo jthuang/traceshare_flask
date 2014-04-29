@@ -1,8 +1,5 @@
 $(function(){
-    removeComment();
-    $(".uploaded-from-camera-roll").hide();
-    $("#create-self-comment").hide();
-
+    
     $(".trace-search-form").submit(function(event){
     	event.preventDefault();
     	var placeOrJournal = $("#place-journal-toggle-btns a.active").text();
@@ -12,15 +9,7 @@ $(function(){
     	console.log("search for " + placeOrJournal);
     });
 	animateTraceSearchBar();
-
 });
-
-function removeComment(){
-	$(".del-comment-btn").on("click", function(){
-		$(".self-comment .slider").remove();
-		$("#create-self-comment").show();
-	});
-}
 
 function animateTraceSearchBar(){
 	$("#search-trace-cancel").hide();
@@ -33,10 +22,4 @@ function animateTraceSearchBar(){
     	$("#search-trace-bar").val("");
     	$("#search-trace-cancel").hide();
     });
-}
-
-function removePlaceImage(){
-	$(".detail-img-thumb-section .icon-close").on("click", function(){
-		
-	});
 }

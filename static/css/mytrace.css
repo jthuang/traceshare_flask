@@ -88,12 +88,12 @@
 }
 .place-map {
 	height:200px;
-	width:350px;
+	width:320px;
 }
 #place-map-canvas {
 	width: 100%;
 	height: 100%;
-	margin: auto;
+	margin: 0;
 }
 .trace-map {
 	height:500px;
@@ -105,5 +105,13 @@
 	/*margin: 0px;*/
 }
 #self-comment {
-	background-color: #DDE4B5;
+	/*background-color: #DDE4B5;*/
+}
+
+.table-view-cell > a:not(.btn){
+padding:0;
+}
+
+#form-save-new-place {
+	display: none;
 }

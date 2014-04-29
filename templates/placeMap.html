@@ -1,0 +1,88 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+    <link rel="stylesheet" href="css/ratchet.min.css">
+    <link rel="stylesheet" href="css/ratchet-theme-ios.min.css">
+    <link rel="stylesheet" href="css/mytrace.css">
+    <script src="js/ratchet.js"></script>
+    <script type="text/javascript"
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB_p_A-nYE-Sn1VlJ_l-OsGcoynL_ExPIw&sensor=false"></script> 
+    
+    <script src="js/jquery-1.11.0.min.js"></script>
+       <script> 
+    var map;
+    var marker;
+    var infowindow;
+    var places = ["Pier 39", "Golden Gate Bridge", "Fishermen's Wharf","Ghirardelli Square"];
+    var geoLocations = [
+                        {lat: 37.8086730, lng:-122.4098210},
+                        {lat: 37.7996170,lng: -122.4672420},
+                        {lat: 37.8081420,lng: -122.4165950},
+                        {lat: 37.8056590,lng: -122.4223080}];
+
+    function initialize() {
+      var mapOptions = {
+        zoom: 12,
+        // center: {lat: 37.8086730, lng:-122.4098210},
+        center: new google.maps.LatLng(37.8086730, -122.4098210),
+        mapTypeControl: false,
+        zoomControl: true,
+        zoomControlOptions: {
+          style: google.maps.ZoomControlStyle.SMALL
+        },
+        streetViewControl: false,
+      };
+      map = new google.maps.Map(document.getElementById('trace-map-canvas'),
+          mapOptions);
+    
+    //create info window content
+      infowindow = new google.maps.InfoWindow();
+      drawMarker();
+      
+    }
+    function drawMarker(){
+      for(var i =0; i<places.length; i++){
+        var markerTitle = places[i];
+        var markerPosition = geoLocations[i];
+
+        marker = new google.maps.Marker({
+                        position: markerPosition,
+                        map: map,
+                        title:markerTitle
+                        });
+
+        linkInfoWindow(marker, markerTitle);
+      }
+    }
+    function linkInfoWindow(marker,title){
+      google.maps.event.addListener(marker, 'click', function() {
+            infowindow.setContent(title);
+            infowindow.open(map,marker);
+          });
+    }
+    google.maps.event.addDomListener(window, 'load', initialize);  
+  
+  </script>
+  </head>
+  <body>
+    <header class="bar bar-nav">
+      <a class="icon icon-left-nav pull-left" href="myPlaces.html" data-transition="slide-out"></a>
+      <h1 class="title">My Trace</h1>
+    </header>
+
+<!-- content starts here -->
+    <div class="content">
+        <div class="trace-map">
+          <div id="trace-map-canvas">
+          </div>
+        </div>
+    </div><!-- /.content -->
+  </body>
+</html>

@@ -1,0 +1,116 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+    <link rel="stylesheet" href="css/ratchet.min.css">
+    <link rel="stylesheet" href="css/ratchet-theme-ios.min.css">
+    <link rel="stylesheet" href="css/mytrace.css">
+    <script src="js/ratchet.js"></script>
+    <script type="text/javascript"
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB_p_A-nYE-Sn1VlJ_l-OsGcoynL_ExPIw&sensor=false"></script> 
+    
+    <script src="js/jquery-1.11.0.min.js"></script>
+       <script> 
+    var map;
+    function initialize() {
+      var mapOptions = {
+        zoom: 16,
+        // center: {lat: 37.8086730, lng:-122.4098210},
+        center: new google.maps.LatLng(37.8086730, -122.4098210),
+        mapTypeControl: false,
+        zoomControl: true,
+        zoomControlOptions: {
+          style: google.maps.ZoomControlStyle.SMALL
+        },
+        streetViewControl: false,
+      };
+      map = new google.maps.Map(document.getElementById('place-map-canvas'),
+          mapOptions);
+    
+      var marker = new google.maps.Marker({
+                      position: {lat: 37.8086730, lng:-122.4098210},
+                      map: map,
+                      title:"Pier 39"
+                      });
+
+    }
+    google.maps.event.addDomListener(window, 'load', initialize);  
+    
+     </script>
+  </head>
+  <body>
+    <header class="bar bar-nav">
+      <a class="icon icon-left-nav pull-left" href="myPlaces.html" data-ignore="push"></a>
+      <h1 class="title">Pier 39</h1>
+      <a class="btn btn-link pull-right" href="placeEdit.html" data-ignore="push">Edit</a>
+    </header>
+
+<!-- content starts here -->
+    <div class="content">
+      <div class="place-detail-datetime">Jun 15, 2014 10:34 
+                <span class="icon icon-info small-icon"></span>
+      </div>
+      <div class="detail-img-section">
+        <div class="slider" id="detail-large-img-slider">
+          <div class="slide-group">
+            <div class="slide">
+              <img class="detail-large-img" src="http://media-cdn.tripadvisor.com/media/photo-s/05/a6/f2/99/pier-39.jpg"/>
+            </div>
+            <div class="slide">
+              <img class="detail-large-img" src="http://media-cdn.tripadvisor.com/media/photo-s/05/a6/f0/f7/the-boys.jpg"/>
+            </div>
+            <div class="slide">
+              <img class="detail-large-img" src="http://media-cdn.tripadvisor.com/media/photo-s/05/8d/d5/8b/fisherman-s-wharf.jpg"/>
+            </div>
+          </div>
+          
+        </div>     
+      </div>
+      <div class="detail-info-section">
+        <div class="detail-travel-party-section">
+          <span class="place-detail-section-title">YOUR TRAVEL PARTY</span>
+          <div class="content-padded">
+            <span><img class="user-profile-pic" src="http://placehold.it/42x42"><span class="user-profile-name">Wendy</span></span>
+            <span><img class="user-profile-pic" src="http://placehold.it/42x42"><span class="user-profile-name">JT</span></span>
+            <span><img class="user-profile-pic" src="http://placehold.it/42x42"><span class="user-profile-name">Chan</span></span>
+          </div>
+        </div>
+        <div class="place-comments">
+          <ul class="table-view">
+             <li class="table-view-cell media">
+                <img class="media-object pull-left user-profile-pic" src="http://placehold.it/42x42">
+                <div class="media-body">
+                  <p>My favorites were the piano stairs and the Mirror Maze upstairs.</p>
+                </div>
+            </li>
+            <li class="table-view-cell media">
+                <img class="media-object pull-left user-profile-pic" src="http://placehold.it/42x42">
+                <div class="media-body">
+                  <p>Enjoyed hanging out with friends here. It's a lively place with nice view of the bay and so many restaurants to choose from. Pier 39 is worth a visit.</p>
+                </div>
+            </li>
+            <li class="table-view-cell media">
+                <img class="media-object pull-left user-profile-pic" src="http://placehold.it/42x42">
+                <div class="media-body">
+                  <p>The animals are so cute! They were pushing each other. One of them looked like Chan! Haha</p>
+                </div>
+            </li>
+          </ul>
+          <div class="detail-share-section">
+             <span class="place-detail-section-title">SHARED WITH: </span>Your Travel Party
+          </div>
+        </div>
+        <div class="place-map">
+          <div id="place-map-canvas">
+          </div>
+        </div>
+      </div>
+    </div><!-- /.content -->
+  </body>
+</html>

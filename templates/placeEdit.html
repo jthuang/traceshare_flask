@@ -1,0 +1,181 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+    <link rel="stylesheet" href="css/ratchet.min.css">
+    <link rel="stylesheet" href="css/ratchet-theme-ios.min.css">
+    <link rel="stylesheet" href="css/mytrace.css">
+    <script src="js/ratchet.js"></script>
+    <script type="text/javascript"
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB_p_A-nYE-Sn1VlJ_l-OsGcoynL_ExPIw&sensor=false"></script> 
+    
+    <script src="js/jquery-1.11.0.min.js"></script>
+    <script src="js/placeEdit.js"></script>
+  </head>
+  <body>
+    <header class="bar bar-nav">
+      <a class="btn btn-link pull-left" href="placeDetail.html" data-ignore="push">Cancel</a>
+      <h1 class="title">Edit</h1>
+      <a class="btn btn-link pull-right" href="#">Save</a>
+    </header>
+
+<!-- content starts here -->
+    <div class="content">
+      <div class="place-detail-datetime">Jun 15, 2014 10:34 
+          <span class="icon icon-info small-icon"></span>
+      </div>
+
+      <div class="detail-img-section">
+        <div class="slider" id="detail-large-img-slider">
+          <div class="slide-group">
+            <div class="slide" name="pier-39.jpg">
+              <img class="detail-large-img" src="http://media-cdn.tripadvisor.com/media/photo-s/05/a6/f2/99/pier-39.jpg"/>
+            </div>
+            <div class="slide" name="the-boys.jpg">
+              <img class="detail-large-img" src="http://media-cdn.tripadvisor.com/media/photo-s/05/a6/f0/f7/the-boys.jpg"/>
+            </div>
+            <div class="slide" name="fisherman-s-wharf.jpg">
+              <img class="detail-large-img" src="http://media-cdn.tripadvisor.com/media/photo-s/05/8d/d5/8b/fisherman-s-wharf.jpg"/>
+            </div>
+          </div> <!-- end slide-group -->
+        </div><!-- end detail-large-img-slider -->  
+      </div> <!-- end detail-img-section-->
+
+      <div class="content-padded detail-img-thumb-section">
+            <span name="pier-39.jpg"><img class="detail-thumb-img" src="http://media-cdn.tripadvisor.com/media/photo-s/05/a6/f2/99/pier-39.jpg"/><span class="icon icon-close"></span></span>
+            <span name="the-boys.jpg"><img class="detail-thumb-img" src="http://media-cdn.tripadvisor.com/media/photo-s/05/a6/f0/f7/the-boys.jpg"/><span class="icon icon-close"></span></span>
+            <span name="fisherman-s-wharf.jpg"><img class="detail-thumb-img" src="http://media-cdn.tripadvisor.com/media/photo-s/05/8d/d5/8b/fisherman-s-wharf.jpg"/><span class="icon icon-close"></span></span>
+            <span><span class="icon icon-plus"></span></span>
+      </div>
+
+      <div class="detail-info-section">
+        <div class="detail-travel-party-section">
+          <span class="place-detail-section-title">YOUR TRAVEL PARTY</span>
+          <a href="#pick-travelparty-modal">
+            <div class="content-padded">
+              <span id="travelparty-0"><img class="user-profile-pic" src="http://placehold.it/42x42"><span class="user-profile-name">Wendy</span></span>
+              <span id="travelparty-1"><img class="user-profile-pic" src="http://placehold.it/42x42"><span class="user-profile-name">Chan</span></span>
+              <span id="travelparty-2"><img class="user-profile-pic" src="http://placehold.it/42x42"><span class="user-profile-name">JT</span></span>
+            </div>
+          </a>
+        </div>
+
+        <div class="place-comments">
+          <div class="place-detail-section-title">YOUR EXPERIENCE HERE</div>
+          <ul class="table-view">
+            <li class="table-view-cell media self-comment" id="comment-1">
+                <img class="media-object pull-left user-profile-pic" src="http://placehold.it/42x42">
+                <div class="media-body" contenteditable="true"  >
+                  <p>My favorites were the piano stairs and the Mirror Maze upstairs.</p>
+                </div>
+                <span class="icon icon-close del-comment-btn"></span>
+            </li>
+            <li class="table-view-cell media">
+                <img class="media-object pull-left user-profile-pic" src="http://placehold.it/42x42">
+                <div class="media-body">
+                  <p>Enjoyed hanging out with friends here. It's a lively place with nice view of the bay and so many restaurants to choose from. Pier 39 is worth a visit.</p>
+                </div>
+            </li>
+            <li class="table-view-cell media">
+                <img class="media-object pull-left user-profile-pic" src="http://placehold.it/42x42">
+                <div class="media-body">
+                  <p>The animals are so cute! They were pushing each other. One of them looked like Chan! Haha</p>
+                </div>
+            </li>
+          </ul>
+          <div class="icon icon-plus add-comment-btn"></div>
+        </div> <!-- end place-comment section -->
+        <div class="detail-share-section">
+             <span class="place-detail-section-title">SHARED WITH: </span><a href="#share-option-modal">Your Travel Party</a>
+          </div>
+      </div><!-- end detail-info-session -->
+        
+        <div>
+          <h5>Place: <a href="#pickplace-modal" id="current-place">Pier 39</a></h5>
+        </div>
+        <div class="place-map">
+          <div id="place-map-canvas">
+          </div>
+        </div>
+
+
+    <!-- pickplace modal-->
+    <div id="pickplace-modal" class="modal">
+      <header class="bar bar-nav">
+          <a class="icon icon-close pull-right" href="#pickplace-modal"></a>
+          <h1 class="title">Pick Place</h1>
+        </header>
+
+        <div class="content">
+          <form class="trace-search-bar">
+            <input type="search" placeholder="Search Places" class="allplace-search-input">
+          </form>
+          <ul class="table-view" id="placemodal-place-tbl">
+              <li class="table-view-cell" id="place-1" lat="" lng=""><span class="icon icon-check"></span>Pier 39</li>
+              <li class="table-view-cell" id="place-2" lat="" lng="">Fisherman's Wharf</li>
+              <li class="table-view-cell" id="place-3" lat="" lng="">Bubba Gumps @ Pier 39</li>
+              <li class="table-view-cell" id="place-4" lat="" lng="">Golden Gate Ferry</li>
+          </ul>
+        </div>
+    </div> <!-- end pickplace modal -->
+
+     <!-- share option modal-->
+    <div id="share-option-modal" class="modal">
+      <header class="bar bar-nav">
+        <a class="icon icon-close pull-right" href="#share-option-modal"></a>
+        <h1 class="title">Share With</h1>
+    </header>
+    <div class="content">
+        <ul class="table-view" id="sharing-options">
+          <li class="table-view-cell"><span class="icon icon-check"></span>Your Travel Party</li>
+          <li class="table-view-cell">Public</li>
+        </ul>
+        <div id="public-sharing-notify">
+            <p>Do you want to notify your travel party and ask for their consent to share the entire trip experience, including their comments and photos to the public?</p>
+            <p><b>Only the photos and comments created by you, and your traval party who have given you consent to share, will be shown to the public.</b></p>
+            <button class="btn btn-block" id="btn-ask-travel-party">Ask My Travel Party<span class="badge badge-primary">0</span></button>
+            <ul id="travel-party-response">
+              <li>
+                <span class="user-profile-name">JT said Yes</span>
+              </span>
+              </li>
+              <li>
+                <span class="user-profile-name">Chan said No</span>
+              </span>
+              </li>
+            </ul>
+        </div>
+    </div>
+    </div> <!-- end share option modal -->
+
+     <div id="pick-travelparty-modal" class="modal">
+        <header class="bar bar-nav">
+           <a class="icon icon-close pull-right" href="#pick-travelparty-modal"></a>
+          <h1 class="title">Travel Party</h1>
+        </header>
+        <div class="content">
+          <div>
+            <form class="trace-search-bar">
+              <input type="search" placeholder="Search Friends" id="friend-search-bar">
+            </form>
+          </div>
+          <ul class="table-view" id="friend-list">
+            <li class="table-view-cell" id="userprofile-1"><span class="icon icon-check"></span>Chan</li>
+            <li class="table-view-cell" id="userprofile-2"><span class="icon icon-check"></span>JT</li>
+            <li class="table-view-cell" id="userprofile-3">Megan</li>
+            <li class="table-view-cell" id="userprofile-4">Kate</li>
+            <li class="table-view-cell" id="userprofile-5">James</li>
+          </ul>
+        </div> 
+    </div><!-- end pick-travelparty-modal -->
+    <form id="form-save-existing-place" action ="placeUpdate" method="POST">
+    </form>
+    </div> <!-- end content -->
+  </body>
+</html>

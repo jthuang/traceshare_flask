@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+    <link rel="stylesheet" href="css/ratchet.min.css">
+    <link rel="stylesheet" href="css/ratchet-theme-ios.min.css">
+    <link rel="stylesheet" href="css/mytrace.css">
+    <script src="js/ratchet.js"></script>
+    <script src="js/jquery-1.11.0.min.js"></script>
+    <script>
+      $(function(){
+          updateSharingOptions();
+      });
+
+      function updateSharingOptions(){
+        $("#sharing-options li").on("click", function(){
+          console.log("click");
+          //uncheck other options
+          var listItems = $("#sharing-options li")
+          listItems.each(function(item){
+            var item=$(this).html();
+            if (item.indexOf("icon-check") != -1){
+              $(this).html($(this).text());
+            }
+          });
+          var curItem = $(this).text();
+          curItem = '<span class="icon icon-check"></span>'+ curItem;
+          $(this).html(curItem);
+        });
+      }
+    </script>
+   
+  </head>
+  <body>
+  	<header class="bar bar-nav">
+      <a class="btn btn-link pull-left" href="javascript:history.back()">Cancel</a>
+      <h1 class="title">Share With</h1>
+      <a class="btn btn-link pull-right" href="javascript:history.back()">Done</a>
+    </header>
+    <div class="content">
+      <ul class="table-view" id="sharing-options">
+        <li class="table-view-cell"><span class="icon icon-check"></span>Your Travel Party</li>
+        <li class="table-view-cell">Public</li>
+      </ul>
+    </div>
+  </body>
+</html>

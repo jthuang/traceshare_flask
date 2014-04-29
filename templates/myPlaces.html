@@ -8,16 +8,17 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
 
-    <link rel="stylesheet" href="static/css/ratchet.css">
-    <link rel="stylesheet" href="static/css/ratchet-theme-ios.min.css">
-    <link rel="stylesheet" href="static/css/mytrace.css">
+    <link rel="stylesheet" href="css/ratchet.css">
+    <link rel="stylesheet" href="css/ratchet-theme-ios.min.css">
+    <link rel="stylesheet" href="css/mytrace.css">
     
-    <script src="static/js/jquery-1.11.0.min.js"></script>
-    <script src="static/js/ratchet.js"></script>
+    <script src="js/jquery-1.11.0.min.js"></script>
+    <script src="js/ratchet.js"></script>
+    <script src="js/myplaces.js"></script>
   </head>
   <body>
     <header class="bar bar-nav">
-      <a class="btn btn-link pull-right" href="newJournal.html">
+      <a class="btn btn-link pull-right" href="newJournal.html" data-ignore="push">
         Add Journal</a>
       <a class="btn btn-link pull-left" href="placeMap.html" data-ignore="push">
         Map
@@ -26,35 +27,25 @@
     </header>
 
     <div class="bar bar-standard bar-header-secondary">
-     <div class="segmented-control">
-        <a class="control-item active" href="#myplaces">
-          Places
-        </a>
-        <a class="control-item" href="#myjournals">
-          Journals
-        </a>
+     <div class="segmented-control" id="place-journal-toggle-btns">
+        <a class="control-item active" href="#myplaces">Places</a>
+        <a class="control-item" href="#myjournals">Journals</a>
       </div>
     </div>
-
-    <!-- <div class="bar bar-footer">
-      <a class="icon icon-compose pull-right"></a>
-      <small class="updated-text">Updated just now</small>
-    </div>
- -->
 <!-- content starts here -->
     <div class="content">
-      <span id="myplaces" class="control-content active">
-        <div id="search-filter">
-          <a class="btn btn-outlined" href="#filterModal">
-           Filters
-          </a>
-        </div>
+      <div id="search-filter">
+          <a class="btn btn-outlined" href="#filterModal">Filters</a>
+      </div>
      
-        <div>
-          <form class="trace-search-bar">
-            <input type="search" placeholder="Search Places" id="search-input">
-          </form>
-        </div>
+      <div>
+        <form class="trace-search-form">
+         <input type="search" id="search-trace-bar" placeholder="Search Place"></input>
+         <span class="icon icon-close" id="search-trace-cancel"></span>
+        </form>
+      </div>
+
+      <span id="myplaces" class="control-content active">
         <ul class="table-view">
           <li class="table-view-cell">
             <a class="place-card" href="placeDetail.html" data-ignore="push">
@@ -67,7 +58,7 @@
             </a>
           </li>
           <li class="table-view-cell">
-            <a class="place-card" href="#" data-transition="slide-in">
+            <a class="place-card" href="#" data-ignore="push">
               <div class="place-datetime">Jun 15, 2014 11:02
                 <span class="icon icon-info small-icon"></span></div>
               
@@ -78,7 +69,7 @@
             </a>
           </li>
           <li class="table-view-cell">
-            <a class="place-card" href="#" data-transition="slide-in">
+            <a class="place-card" href="#" data-ignore="push">
               <div class="place-datetime">Jun 15, 2014 13:17
                 <span class="icon icon-info small-icon"></span></div>
               
@@ -89,7 +80,7 @@
             </a>
           </li>
           <li class="table-view-cell">
-            <a class="place-card" href="#" data-transition="slide-in">
+            <a class="place-card" href="#" data-ignore="push">
               <div class="place-datetime">Jun 15, 2014 15:41
                 <span class="icon icon-info small-icon"></span></div>
               
@@ -115,7 +106,7 @@
             </a>
           </li>
           <li class="table-view-cell">
-            <a class="place-card" href="#" data-transition="slide-in">
+            <a class="place-card" href="#" data-ignore="push">
               <div class="place-datetime">July 4 - July 5, 2013
                 <span class="icon icon-info small-icon"></span></div>
                 <img class="place-card-img" src="http://maps.googleapis.com/maps/api/staticmap?center=37.7715170,-122.4687330&zoom=13&size=600x300&maptype=roadmap
@@ -129,7 +120,7 @@
             </a>
           </li>
           <li class="table-view-cell">
-            <a class="place-card" href="#" data-transition="slide-in">
+            <a class="place-card" href="#" data-ignore="push">
               <div class="place-datetime">Mar 25- 27, 2014
                 <span class="icon icon-info small-icon"></span></div>
                 <img class="place-card-img" src="http://maps.googleapis.com/maps/api/staticmap?center=37.8269770,-122.4229560&zoom=12&size=600x300&maptype=roadmap&markers=color:red%7Clabel:1%7C37.8269770,-122.4229560&markers=color:red%7Clabel:2%7C37.8018000,-122.3970950&markers=color:red%7Clabel:3%7C37.8014560,-122.4480530&markers=color:red%7Clabel:4%7C37.7545040,-122.4472220&style=feature:administrative|visibility:off|feature:poi|visibility:simplified&sensor=false"/>
@@ -139,7 +130,7 @@
             </a>
           </li>
           <li class="table-view-cell">
-            <a class="place-card" href="#" data-transition="slide-in">
+            <a class="place-card" href="#" data-ignore="push">
               <div class="place-datetime">Aug 12, 2013
                 <span class="icon icon-info small-icon"></span></div>
                 <img class="place-card-img" src="http://maps.googleapis.com/maps/api/staticmap?center=37.8086730,-122.4098210&zoom=12&size=600x300&maptype=roadmap&markers=color:red%7Clabel:1%7C37.8086730,-122.4098210&markers=color:red%7Clabel:2%7C37.8081420,-122.4165950&markers=color:red%7Clabel:3%7C37.8056590,-122.4223080&style=feature:administrative|visibility:off|feature:poi|visibility:simplified&sensor=false"/>
