@@ -156,7 +156,7 @@ function savePlace(){
 			var commentId = $(this).attr("id");
 			createFormInput(commentId, $(this).text());
   		});
-  		console.log($("#form-save-existing-place"));
+  		$("#form-save-existing-place").submit();
   	});
   }
 
