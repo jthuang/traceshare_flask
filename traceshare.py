@@ -1,6 +1,7 @@
 import flask
 from flask import request
 from os import environ
+from getMyPlaces import getMyPlaces
 
 app = flask.Flask(__name__)
 
@@ -16,10 +17,17 @@ def hello():
     return 'Hello World! TraceShare!'
 
 @app.route('/mytrace', methods=["GET"])
-def get_my_place():
-    app.logger.debug("Accessing mytrace.html")
-    resp = flask.make_response(flask.render_template('mytrace.html'))
-    return resp
+def get_my_trace():
+   app.logger.debug("Accessing mytrace.html")
+   
+   # TODO: get uid from GET argument
+   uid = "1"
+   places = getMyPlaces("1")
+   
+   resp = flask.make_response(flask.render_template(
+            'mytrace.html',
+            places=places))
+   return resp
 
 @app.route('/placeEdit', methods=["GET"])
 def edit_my_place():

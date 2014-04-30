@@ -46,18 +46,20 @@
       </div>
 
       <span id="myplaces" class="control-content active">
-        <ul class="table-view">
-          <li class="table-view-cell">
-            <a class="place-card" href="placeDetail.html" data-ignore="push">
-              <div class="place-datetime">Jun 15, 2014 10:34 
-                <span class="icon icon-info small-icon"></span></div>
-              <img class="place-card-img" src="http://media-cdn.tripadvisor.com/media/photo-s/05/a6/f2/99/pier-39.jpg"/>
-              <div class="place-info">
-                <div class="place-name">Pier 39</div>
-              </div>
+         <ul class="table-view">
+            {% for place in places %}
+            <li class="table-view-cell">
+            <a class="place-card" href="placedetail?{{ place['cid'] }}" data-ignore="push">
+               <div class="place-datetime">{{ place['time'] }} 
+                  <span class="icon icon-info small-icon"></span></div>
+               <img class="place-card-img" src="{{ place['photo_url'] }}"/>
+               <div class="place-info">
+                  <div class="place-name">{{ place['place_name'] }}</div>
+               </div>
             </a>
-          </li>
-        </ul>
+            </li>
+            {% endfor %}
+         </ul>
       </span> 
 
       <span id="myjournals" class="control-content">
