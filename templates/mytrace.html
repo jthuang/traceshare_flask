@@ -1,0 +1,102 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+    <link rel="stylesheet" href="static/css/ratchet.css">
+    <link rel="stylesheet" href="static/css/ratchet-theme-ios.min.css">
+    <link rel="stylesheet" href="static/css/mytrace.css">
+    
+    <script src="static/js/jquery-1.11.0.min.js"></script>
+    <script src="static/js/ratchet.js"></script>
+    <script src="static/js/myplaces.js"></script>
+  </head>
+  <body>
+    <header class="bar bar-nav">
+      <a class="btn btn-link pull-right" href="newJournal.html" data-ignore="push">
+        Add Journal</a>
+      <a class="btn btn-link pull-left" href="placeMap.html" data-ignore="push">
+        Map
+      </a>
+      <h1 class="title">My Trace</h1>
+    </header>
+
+    <div class="bar bar-standard bar-header-secondary">
+     <div class="segmented-control" id="place-journal-toggle-btns">
+        <a class="control-item active" href="#myplaces">Places</a>
+        <a class="control-item" href="#myjournals">Journals</a>
+      </div>
+    </div>
+<!-- content starts here -->
+    <div class="content">
+      <div id="search-filter">
+          <a class="btn btn-outlined" href="#filterModal">Filters</a>
+      </div>
+     
+      <div>
+        <form class="trace-search-form">
+         <input type="search" id="search-trace-bar" placeholder="Search Place"></input>
+         <span class="icon icon-close" id="search-trace-cancel"></span>
+        </form>
+      </div>
+
+      <span id="myplaces" class="control-content active">
+        <ul class="table-view">
+          <li class="table-view-cell">
+            <a class="place-card" href="placeDetail.html" data-ignore="push">
+              <div class="place-datetime">Jun 15, 2014 10:34 
+                <span class="icon icon-info small-icon"></span></div>
+              <img class="place-card-img" src="http://media-cdn.tripadvisor.com/media/photo-s/05/a6/f2/99/pier-39.jpg"/>
+              <div class="place-info">
+                <div class="place-name">Pier 39</div>
+              </div>
+            </a>
+          </li>
+        </ul>
+      </span> 
+
+      <span id="myjournals" class="control-content">
+        <ul class="table-view">
+          <li class="table-view-cell">
+            <a class="place-card" data-ignore="push" href="journalDetail.html" data-transition="slide-in">
+              <div class="place-datetime">Jun 15, 2013
+                <span class="icon icon-info small-icon"></span></div>
+                <img class="place-card-img" src="http://maps.googleapis.com/maps/api/staticmap?center=37.8086730,-122.4098210&zoom=12&size=600x300&maptype=roadmap&markers=color:red%7Clabel:1%7C37.8086730,-122.4098210&markers=color:red%7Clabel:2%7C37.8081420,-122.4165950&markers=color:red%7Clabel:3%7C37.8056590,-122.4223080&markers=color:red%7Clabel:4%7C37.7996170,-122.4672420&style=feature:administrative|visibility:off|feature:poi|visibility:simplified&sensor=false"/>
+                <div class="place-info">
+                <div class="place-name">A day in downtown SF</div>
+              </div>
+            </a>
+          </li>
+      </span>
+
+
+    <!-- Compose modal -->
+    <div id="filterModal" class="modal">
+        <header class="bar bar-nav">
+          <a class="btn btn-link btn-nav pull-right" href="#filterModal">Cancel</a>
+          <h1 class="title">Filters</h1>
+        </header>
+
+      <div class="content">
+        <form class="input-group">
+          Date Range:
+          <div class="input-row">
+            <label>Start Date</label>
+            <input type="date"></input>
+          </div>
+          <div class="input-row">
+            <label>End Date</label>
+            <input type="date"></input>
+          </div>
+          <button class="btn btn-positive btn-block">Search</button>
+        </form>
+      </div>
+    </div><!-- /.modal -->
+  </div><!-- /.content -->
+  </body>
+</html>

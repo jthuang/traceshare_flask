@@ -15,10 +15,10 @@ app.logger.addHandler(file_handler)
 def hello():
     return 'Hello World! TraceShare!'
 
-@app.route('/myplace', methods=["GET"])
+@app.route('/mytrace', methods=["GET"])
 def get_my_place():
-    app.logger.debug("Accessing myPlace.html")
-    resp = flask.make_response(flask.render_template('myPlaces.html'))
+    app.logger.debug("Accessing mytrace.html")
+    resp = flask.make_response(flask.render_template('mytrace.html'))
     return resp
 
 @app.route('/placeEdit', methods=["GET"])
