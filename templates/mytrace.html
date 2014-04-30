@@ -47,7 +47,7 @@
 
       <span id="myplaces" class="control-content active">
          <ul class="table-view">
-            {% for cid, time, place_id, photo_url, photo_name in places.iteritems() %}
+            {% for cid, time, place_id, photo_url, photo_name in place_list %}
             <li class="table-view-cell">
             <a class="place-card" href="placedetail?{{ cid }}" data-ignore="push">
                <div class="place-datetime">{{ time }} 

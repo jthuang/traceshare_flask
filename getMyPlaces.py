@@ -2,6 +2,7 @@
 
 import sys
 import sqlite3
+import datetime
 
 GET_PLACES_EXPR = "SELECT cid, time, place_id FROM checkins WHERE (host_uid = ?) ORDER BY time DESC;"
 GET_ONE_PHOTO_URL_EXPR = "SELECT photo_url FROM photos WHERE (cid = ?) LIMIT 1;"
@@ -19,7 +20,7 @@ def getMyPlaces(uid):
 	for p in c.execute(GET_PLACES_EXPR, uid):
 		place_info = {}
 		place_info['cid'] = p[0]
-		place_info['time'] = p[1]
+		place_info['time'] = datetime.datetime.fromtimestamp(int(p[1])).strftime('%Y-%m-%d %H:%M:%S')
 		place_info['place_id'] = p[2]
 		places.append(place_info)
 

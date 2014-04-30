@@ -22,11 +22,15 @@ def get_my_trace():
    
    # TODO: get uid from GET argument
    uid = "1"
-   places = getMyPlaces("1")
-   
+   places = getMyPlaces(uid)
+
+   place_list = []
+   for p in places:
+      place_list.append((p['cid'], p['time'], p['place_id'], p['photo_url'], p['place_name']))
+
    resp = flask.make_response(flask.render_template(
             'mytrace.html',
-            places=places))
+            place_list=place_list))
    return resp
 
 @app.route('/placeEdit', methods=["GET"])
@@ -47,5 +51,6 @@ def update_my_place():
 #    resp = flask.make_response(flask.render_template('placeEdit.html'))
 #    return resp
 
-
-
+if __name__ == "__main__":
+   #get_my_trace()
+   app.run()
