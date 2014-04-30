@@ -47,14 +47,14 @@
 
       <span id="myplaces" class="control-content active">
          <ul class="table-view">
-            {% for place in places %}
+            {% for cid, time, place_id, photo_url, photo_name in places.iteritems() %}
             <li class="table-view-cell">
-            <a class="place-card" href="placedetail?{{ place['cid'] }}" data-ignore="push">
-               <div class="place-datetime">{{ place['time'] }} 
+            <a class="place-card" href="placedetail?{{ cid }}" data-ignore="push">
+               <div class="place-datetime">{{ time }} 
                   <span class="icon icon-info small-icon"></span></div>
-               <img class="place-card-img" src="{{ place['photo_url'] }}"/>
+               <img class="place-card-img" src="{{ photo_url }}"/>
                <div class="place-info">
-                  <div class="place-name">{{ place['place_name'] }}</div>
+                  <div class="place-name">{{ place_name }}</div>
                </div>
             </a>
             </li>
