@@ -103,7 +103,7 @@ def update_my_place():
 
 @app.route('/capture')
 def capture():
-    return '<br><A href=\"showcamera:\">Show Camera</a>'
+    return '<input type="file" capture="camera" accept="image/*" id="cameraInput">'
 
 if __name__ == "__main__":
    #get_my_trace()
