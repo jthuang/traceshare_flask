@@ -1,0 +1,90 @@
+11,13c11,13
+<     <link rel="stylesheet" href="css/ratchet.css">
+<     <link rel="stylesheet" href="css/ratchet-theme-ios.min.css">
+<     <link rel="stylesheet" href="css/mytrace.css">
+---
+>     <link rel="stylesheet" href="static/css/ratchet.css">
+>     <link rel="stylesheet" href="static/css/ratchet-theme-ios.min.css">
+>     <link rel="stylesheet" href="static/css/mytrace.css">
+22,24c22,23
+<       <!-- <a class="icon icon-left-nav pull-left" href="myPlaces.html" data-ignore="push"></a> -->
+<        <a class="icon icon-left-nav pull-left" href="javascript:history.back()" data-ignore="push"></a>
+<       <h1 class="title">A day in downtown SF</h1>
+---
+>       <a class="icon icon-left-nav pull-left" href="/mytrace" data-transition="slide-out"></a>
+>       <h1 class="title">{{ journal_info['name'] }}</h1>
+33c32
+<             My first time being in San Francisco. Only spending a day in downtown SF and checked out some of the most famous tourist spots  
+---
+>            {{ journal_info['desp'] }}
+36,78c35,47
+<           <li class="table-view-cell">
+<             <a class="place-card" href="placeDetail.html" data-ignore="push">
+<               <div class="place-datetime">Jun 15, 2014 10:34 
+<                 <span class="icon icon-info small-icon"></span></div>
+<               <img class="place-card-img" src="http://media-cdn.tripadvisor.com/media/photo-s/05/a6/f2/99/pier-39.jpg"/>
+<               <div class="place-info">
+<                 <div class="place-name">Pier 39</div>
+<               </div>
+<             </a>
+<           </li>
+<           <li class="table-view-cell">
+<             <a class="place-card" href="#" data-ignore="push">
+<               <div class="place-datetime">Jun 15, 2014 11:02
+<                 <span class="icon icon-info small-icon"></span></div>
+<               
+<               <img class="place-card-img"  src="http://media-cdn.tripadvisor.com/media/photo-s/05/9e/08/ef/fisherman-s-wharf.jpg"/>
+<               <div class="place-info">
+<                 <div class="place-name">Fishermen's Wharf</div>
+<               </div>
+<             </a>
+<           </li>
+<           <li class="table-view-cell">
+<             <a class="place-card" href="#" data-ignore="push">
+<               <div class="place-datetime">Jun 15, 2014 13:17
+<                 <span class="icon icon-info small-icon"></span></div>
+<               
+<               <img class="place-card-img" src="http://media-cdn.tripadvisor.com/media/photo-s/01/bf/63/01/ghirardelli.jpg"/>
+<               <div class="place-info">
+<                 <div class="place-name">Ghirardelli Square</div>
+<               </div>
+<             </a>
+<           </li>
+<           <li class="table-view-cell">
+<             <a class="place-card" href="#" data-ignore="push">
+<               <div class="place-datetime">Jun 15, 2014 15:41
+<                 <span class="icon icon-info small-icon"></span></div>
+<               
+<               <img class="place-card-img" src="http://media-cdn.tripadvisor.com/media/daodao/photo-s/05/80/ee/59/caption.jpg"/>
+<               <div class="place-info">
+<                 <div class="place-name">Golden Gate Bridge</div>
+<               </div>
+<             </a>
+<           </li>
+---
+>            {% for checkin in journal_info['checkins'] %}
+>            <li class="table-view-cell">
+>                <a class="place-card" href="placedetail?cid={{ checkin['cid'] }}" data-transition="slide-in">
+>                   <div class="place-datetime">{{ checkin['time']}}
+>                      <span class="icon icon-info small-icon"></span>
+>                   </div>
+>                   <img class="place-card-img" src="{{ checkin['photo_urls'][0] }}"/>
+>                   <div class="place-info">
+>                      <div class="place-name">{{ checkin['name'] }}</div>
+>                   </div>
+>                </a>
+>             </li>
+>             {% endfor %}
+82c51
+<     <script src="js/ratchet.js"></script>
+---
+>     <script src="static/js/ratchet.js"></script>
+89,92c58,60
+<           ["Pier 39", 37.8086730,-122.4098210, 4],
+<           ["Fishermen's Wharf", 37.8081420,-122.4165950, 5],
+<           ["Ghirardelli Square",37.8056590,-122.4223080, 3],
+<           ["Golden Gate Bridge", 37.7996170,-122.4672420, 1]
+---
+>           {% for checkin in journal_info['checkins'] %}
+>           [{{ checkin['name'] }}, {{ checkin['lat'] }},{{ checkin['long'] }}, {{ checkin['cid'] }}],
+>           {% endfor %}

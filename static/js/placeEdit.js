@@ -36,6 +36,7 @@ google.maps.event.addDomListener(window, 'load', initialize);
       addComment();
       removePlaceImage();
       savePlace();
+      updateImgSlider();
 
 	  $(".uploaded-from-camera-roll").hide();
 	  // $("#create-self-comment").hide();
@@ -156,7 +157,6 @@ function savePlace(){
 			var commentId = $(this).attr("id");
 			createFormInput(commentId, $(this).text());
   		});
-  		$("#form-save-existing-place").submit();
   	});
   }
 
@@ -179,3 +179,24 @@ function savePlace(){
   		removeComment();
   	});
   }
+
+  function updateImgSlider(){
+    $(".detail-thumb-img").on("click", function(){
+        var src = $(this).attr("src");
+        //find out the position of this img in the slider group
+        var listOfImg = $("#detail-large-img-slider").find(".slide");
+
+        var index = 0;
+        $.each(listOfImg, function(i, v){
+            if ($(v).children("img").attr("src") == src){
+                index = i;
+            }
+        });
+
+        var sliderWidth = document.querySelector(".slide").offsetWidth;
+        var offsetX = -(index * sliderWidth);
+        
+        $("#detail-large-img-slider").children(".slide-group").css('-webkit-transition-duration', '.2s');
+        $("#detail-large-img-slider").children(".slide-group").css('webkitTransform', 'translate3d(' + offsetX + 'px,0,0)');
+    });
+}

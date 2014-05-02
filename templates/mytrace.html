@@ -20,7 +20,7 @@
     <header class="bar bar-nav">
       <a class="btn btn-link pull-right" href="newJournal.html" data-ignore="push">
         Add Journal</a>
-      <a class="btn btn-link pull-left" href="placeMap.html" data-ignore="push">
+      <a class="btn btn-link pull-left" href="/placemap" data-ignore="push">
         Map
       </a>
       <h1 class="title">My Trace</h1>
@@ -47,14 +47,14 @@
 
       <span id="myplaces" class="control-content active">
          <ul class="table-view">
-            {% for cid, time, place_id, photo_url, photo_name in place_list %}
+            {% for p in places %}
             <li class="table-view-cell">
-            <a class="place-card" href="placedetail?{{ cid }}" data-ignore="push">
-               <div class="place-datetime">{{ time }} 
+            <a class="place-card" href="placedetail?cid={{ p['cid'] }}" data-ignore="push">
+               <div class="place-datetime">{{ p['time'] }} 
                   <span class="icon icon-info small-icon"></span></div>
-               <img class="place-card-img" src="{{ photo_url }}"/>
+               <img class="place-card-img" src="{{ p['photo_url'] }}"/>
                <div class="place-info">
-                  <div class="place-name">{{ place_name }}</div>
+                  <div class="place-name">{{ p['place_name'] }}</div>
                </div>
             </a>
             </li>
@@ -63,17 +63,20 @@
       </span> 
 
       <span id="myjournals" class="control-content">
-        <ul class="table-view">
-          <li class="table-view-cell">
-            <a class="place-card" data-ignore="push" href="journalDetail.html" data-transition="slide-in">
-              <div class="place-datetime">Jun 15, 2013
-                <span class="icon icon-info small-icon"></span></div>
-                <img class="place-card-img" src="http://maps.googleapis.com/maps/api/staticmap?center=37.8086730,-122.4098210&zoom=12&size=600x300&maptype=roadmap&markers=color:red%7Clabel:1%7C37.8086730,-122.4098210&markers=color:red%7Clabel:2%7C37.8081420,-122.4165950&markers=color:red%7Clabel:3%7C37.8056590,-122.4223080&markers=color:red%7Clabel:4%7C37.7996170,-122.4672420&style=feature:administrative|visibility:off|feature:poi|visibility:simplified&sensor=false"/>
-                <div class="place-info">
-                <div class="place-name">A day in downtown SF</div>
-              </div>
+         <ul class="table-view">
+            {% for j in journals %}
+            <li class="table-view-cell">
+            <a class="place-card" data-ignore="push" href="journaldetail?jid={{ j['jid'] }}" data-transition="slide-in">
+               <div class="place-datetime">{{ j['time'] }}
+                  <span class="icon icon-info small-icon"></span></div>
+               <img class="place-card-img" src="http://maps.googleapis.com/maps/api/staticmap?center={{ j['checkins'][0]['lat'] }},{{ j['checkins'][0]['long'] }}&zoom=12&size=600x300&maptype=roadmap&markers=color:red{% for c in j['checkins'] %}%7Clabel:1%7C{{ c['lat'] }},{{ c['long'] }}&markers=color:red{% endfor %}&style=feature:administrative|visibility:off|feature:poi|visibility:simplified&sensor=false"/>
+               <div class="place-info">
+                  <div class="place-name">{{ j['name'] }}</div>
+               </div>
             </a>
-          </li>
+            </li>
+            {% endfor %}
+         </ul>
       </span>
 
 

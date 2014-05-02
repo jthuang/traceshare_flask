@@ -8,30 +8,34 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
 
-    <link rel="stylesheet" href="css/ratchet.min.css">
-    <link rel="stylesheet" href="css/ratchet-theme-ios.min.css">
-    <link rel="stylesheet" href="css/mytrace.css">
-    <script src="js/ratchet.js"></script>
+    <link rel="stylesheet" href="static/css/ratchet.min.css">
+    <link rel="stylesheet" href="static/css/ratchet-theme-ios.min.css">
+    <link rel="stylesheet" href="static/css/mytrace.css">
+    <script src="static/js/ratchet.js"></script>
     <script type="text/javascript"
       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB_p_A-nYE-Sn1VlJ_l-OsGcoynL_ExPIw&sensor=false"></script> 
     
-    <script src="js/jquery-1.11.0.min.js"></script>
+    <script src="static/js/jquery-1.11.0.min.js"></script>
        <script> 
     var map;
     var marker;
     var infowindow;
-    var places = ["Pier 39", "Golden Gate Bridge", "Fishermen's Wharf","Ghirardelli Square"];
+    var places = [
+      {% for p in places %}
+      {name: "{{ p['place_name'] }}", date: "{{ p['time'] }}"},
+      {% endfor %}
+    ];
     var geoLocations = [
-                        {lat: 37.8086730, lng:-122.4098210},
-                        {lat: 37.7996170,lng: -122.4672420},
-                        {lat: 37.8081420,lng: -122.4165950},
-                        {lat: 37.8056590,lng: -122.4223080}];
+      {% for p in places %}
+      {lat: {{ p['lat'] }}, lng:{{ p['long'] }}},
+      {% endfor %}
+    ];
 
     function initialize() {
       var mapOptions = {
         zoom: 12,
         // center: {lat: 37.8086730, lng:-122.4098210},
-        center: new google.maps.LatLng(37.8086730, -122.4098210),
+        center: new google.maps.LatLng({{ places[0]['lat'] }}, {{ places[0]['long'] }}),
         mapTypeControl: false,
         zoomControl: true,
         zoomControlOptions: {
@@ -49,7 +53,8 @@
     }
     function drawMarker(){
       for(var i =0; i<places.length; i++){
-        var markerTitle = places[i];
+        var markerTitle = places[i].name;
+        var markerDate = places[i].date;
         var markerPosition = geoLocations[i];
 
         marker = new google.maps.Marker({
@@ -58,7 +63,7 @@
                         title:markerTitle
                         });
 
-        linkInfoWindow(marker, markerTitle);
+        linkInfoWindow(marker, "<p>"+markerTitle+"</p><p>"+markerDate+"</p>");
       }
     }
     function linkInfoWindow(marker,title){
@@ -73,7 +78,7 @@
   </head>
   <body>
     <header class="bar bar-nav">
-      <a class="icon icon-left-nav pull-left" href="myPlaces.html" data-transition="slide-out"></a>
+      <a class="icon icon-left-nav pull-left" href="/mytrace" data-ignore="push"></a>
       <h1 class="title">My Trace</h1>
     </header>
 

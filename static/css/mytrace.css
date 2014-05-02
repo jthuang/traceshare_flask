@@ -93,13 +93,18 @@
 #place-map-canvas {
 	width: 100%;
 	height: 100%;
-	margin: 0;
 }
+
 .trace-map {
 	height:500px;
 	width:350px;
 }
 #trace-map-canvas {
+	width: 100%;
+	height: 100%;
+	/*margin: 0px;*/
+}
+#explore-map-canvas {
 	width: 100%;
 	height: 100%;
 	/*margin: 0px;*/
@@ -114,4 +119,23 @@ padding:0;
 
 #form-save-new-place {
 	display: none;
+}
+.photo-datetime {
+	/*float: left;*/
+	position: absolute;
+	top:5px;
+	left: 5px;
+	z-index: 10;
+	font-size: 10px;
+}
+.like-info {
+	/*float: right;*/
+	position: absolute;
+	top: 5px;
+	right: 15px;
+	z-index: 10;
+	font-size: 10px;
+}
+.img-thumb-sort {
+	font-size: 14px;
 }

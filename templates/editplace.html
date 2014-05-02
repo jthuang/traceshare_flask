@@ -20,37 +20,33 @@
   </head>
   <body>
     <header class="bar bar-nav">
-      <a class="btn btn-link pull-left" href="placeDetail.html" data-ignore="push">Cancel</a>
+      <a class="btn btn-link pull-left" href="placedetail?cid={{ place_info['cid'] }}" data-ignore="push">Cancel</a>
       <h1 class="title">Edit</h1>
       <a class="btn btn-link pull-right" href="#">Save</a>
     </header>
 
 <!-- content starts here -->
     <div class="content">
-      <div class="place-detail-datetime">Jun 15, 2014 10:34 
+      <div class="place-detail-datetime">{{ place_info['time'] }} 
           <span class="icon icon-info small-icon"></span>
       </div>
 
       <div class="detail-img-section">
         <div class="slider" id="detail-large-img-slider">
           <div class="slide-group">
-            <div class="slide" name="pier-39.jpg">
-              <img class="detail-large-img" src="http://media-cdn.tripadvisor.com/media/photo-s/05/a6/f2/99/pier-39.jpg"/>
+            {% for photo in place_info['photos'] %}
+            <div class="slide" name="{{ photo['name'] }}">
+               <img class="detail-large-img" src="{{ photo['url'] }}"/>
             </div>
-            <div class="slide" name="the-boys.jpg">
-              <img class="detail-large-img" src="http://media-cdn.tripadvisor.com/media/photo-s/05/a6/f0/f7/the-boys.jpg"/>
-            </div>
-            <div class="slide" name="fisherman-s-wharf.jpg">
-              <img class="detail-large-img" src="http://media-cdn.tripadvisor.com/media/photo-s/05/8d/d5/8b/fisherman-s-wharf.jpg"/>
-            </div>
+            {% endfor %}
           </div> <!-- end slide-group -->
         </div><!-- end detail-large-img-slider -->  
       </div> <!-- end detail-img-section-->
 
       <div class="content-padded detail-img-thumb-section">
-            <span name="pier-39.jpg"><img class="detail-thumb-img" src="http://media-cdn.tripadvisor.com/media/photo-s/05/a6/f2/99/pier-39.jpg"/><span class="icon icon-close"></span></span>
-            <span name="the-boys.jpg"><img class="detail-thumb-img" src="http://media-cdn.tripadvisor.com/media/photo-s/05/a6/f0/f7/the-boys.jpg"/><span class="icon icon-close"></span></span>
-            <span name="fisherman-s-wharf.jpg"><img class="detail-thumb-img" src="http://media-cdn.tripadvisor.com/media/photo-s/05/8d/d5/8b/fisherman-s-wharf.jpg"/><span class="icon icon-close"></span></span>
+            {% for photo in place_info['photos'] %}
+            <span name="{{ photo['name'] }}"><img class="detail-thumb-img" src="{{ photo['url'] }}"/><span class="icon icon-close"></span></span>
+            {% endfor %}
             <span><span class="icon icon-plus"></span></span>
       </div>
 
@@ -174,7 +170,7 @@
           </ul>
         </div> 
     </div><!-- end pick-travelparty-modal -->
-    <form id="form-save-existing-place" action ="placeUpdate" method="POST">
+    <form id="form-save-existing-place" method="POST">
     </form>
     </div> <!-- end content -->
   </body>

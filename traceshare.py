@@ -2,6 +2,9 @@ import flask
 from flask import request
 from os import environ
 from getMyPlaces import getMyPlaces
+from getMyJournals import getMyJournals
+from getPlaceDetail import getPlaceDetail
+from getJournalDetail import getJournalDetail
 
 app = flask.Flask(__name__)
 
@@ -18,19 +21,52 @@ def hello():
 
 @app.route('/mytrace', methods=["GET"])
 def get_my_trace():
-   app.logger.debug("Accessing mytrace.html")
+   uid = request.args.get('uid', "1")
+   app.logger.debug("Accessing mytrace.html", uid)
    
-   # TODO: get uid from GET argument
-   uid = "1"
    places = getMyPlaces(uid)
-
-   place_list = []
-   for p in places:
-      place_list.append((p['cid'], p['time'], p['place_id'], p['photo_url'], p['place_name']))
+   journals = getMyJournals(uid)
 
    resp = flask.make_response(flask.render_template(
             'mytrace.html',
-            place_list=place_list))
+            places=places,
+            journals=journals))
+   return resp
+
+@app.route('/placemap', methods=["GET"])
+def get_my_place_map():
+   uid = request.args.get('uid', "1")
+   app.logger.debug("Accessing placemap.html", uid)
+   
+   places = getMyPlaces(uid)
+
+   resp = flask.make_response(flask.render_template(
+            'placemap.html',
+            places=places))
+   return resp
+
+@app.route('/placedetail', methods=["GET"])
+def get_place_detal():
+   cid = request.args.get('cid', "1")
+   app.logger.debug("Accessing placedetail.html", cid)
+   
+   place_info = getPlaceDetail(cid)
+
+   resp = flask.make_response(flask.render_template(
+            'placedetail.html',
+            place_info=place_info))
+   return resp
+
+@app.route('/journaldetail', methods=["GET"])
+def get_journal_detal():
+   jid = request.args.get('jid', "1")
+   app.logger.debug("Accessing journaldetail.html", jid)
+   
+   journal_info = getJournalDetail(jid)
+
+   resp = flask.make_response(flask.render_template(
+            'journaldetail.html',
+            journal_info=journal_info))
    return resp
 
 @app.route('/placeEdit', methods=["GET"])

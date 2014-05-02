@@ -6,7 +6,7 @@ import datetime
 
 GET_PLACES_EXPR = "SELECT cid, time, place_id FROM checkins WHERE (host_uid = ?) ORDER BY time DESC;"
 GET_ONE_PHOTO_URL_EXPR = "SELECT photo_url FROM photos WHERE (cid = ?) LIMIT 1;"
-GET_PLACE_NAME_EXPR = "SELECT name FROM places WHERE (place_id = ?);"
+GET_PLACE_NAME_LAT_LONG_EXPR = "SELECT name, lat, long FROM places WHERE (place_id = ?);"
 
 # input  : cid
 # output : places[{}]
@@ -30,9 +30,9 @@ def getMyPlaces(uid):
 		c.execute(GET_ONE_PHOTO_URL_EXPR, str(p['cid']))
 		p['photo_url'] = c.fetchone()[0]
 		
-		# get place_name
-		c.execute(GET_PLACE_NAME_EXPR, str(p['place_id']))
-		p['place_name'] = c.fetchone()[0]
+		# get place name, lat, long
+		c.execute(GET_PLACE_NAME_LAT_LONG_EXPR, str(p['place_id']))
+		(p['place_name'], p['lat'], p['long']) = c.fetchone()
 	
 	conn.close()
 
@@ -47,6 +47,8 @@ def printMyPlaces(places):
 		print "time:", p['time']
 		print "place_id:", p['place_id']
 		print "place_name:", p['place_name']
+		print "lat:", p['lat']
+		print "long:", p['long']
 		print "photo_url:", p['photo_url']
 
 
