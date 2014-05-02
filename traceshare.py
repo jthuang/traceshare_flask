@@ -103,7 +103,8 @@ def update_my_place():
 
 @app.route('/capture')
 def capture():
-    return '<input type="file" capture="camera" accept="image/*" id="cameraInput">'
+   resp = flask.make_response(flask.render_template('capture.html'))
+   return resp
 
 if __name__ == "__main__":
    #get_my_trace()
