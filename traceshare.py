@@ -17,7 +17,7 @@ app.logger.addHandler(file_handler)
 
 @app.route('/')
 def hello():
-    return 'Hello World! TraceShare!'
+    return 'Hello World! <a href="/mytrace">TraceShare!</a>'
 
 @app.route('/mytrace', methods=["GET"])
 def get_my_trace():
@@ -69,11 +69,17 @@ def get_journal_detal():
             journal_info=journal_info))
    return resp
 
-@app.route('/placeEdit', methods=["GET"])
+@app.route('/editplace', methods=["GET"])
 def edit_my_place():
-    app.logger.debug("Accessing placeEdit.html")
-    resp = flask.make_response(flask.render_template('placeEdit.html'))
-    return resp
+   jid = request.args.get('cid', "1")
+   app.logger.debug("Accessing editplace.html", cid)
+
+   place_info = getPlaceDetail(cid)
+
+   resp = flask.make_response(flask.render_template(
+            'editplace.html',
+            place_info=place_info))
+   return resp
 
 @app.route('/placeUpdate', methods=["POST"])
 def update_my_place():
