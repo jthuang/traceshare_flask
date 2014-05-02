@@ -101,6 +101,10 @@ def update_my_place():
 #    resp = flask.make_response(flask.render_template('placeEdit.html'))
 #    return resp
 
+@app.route('/capture')
+def capture():
+    return '<br><A href=\"showcamera:\">Show Camera</a>'
+
 if __name__ == "__main__":
    #get_my_trace()
    app.run()
