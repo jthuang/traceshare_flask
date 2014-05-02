@@ -5,6 +5,8 @@ from getMyPlaces import getMyPlaces
 from getMyJournals import getMyJournals
 from getPlaceDetail import getPlaceDetail
 from getJournalDetail import getJournalDetail
+from getFriends import getFriends
+from getPlaces import getPlaces
 
 app = flask.Flask(__name__)
 
@@ -71,14 +73,20 @@ def get_journal_detal():
 
 @app.route('/editplace', methods=["GET"])
 def edit_my_place():
-   jid = request.args.get('cid', "1")
+   # TODO: uid from session
+   uid = "1"
+   cid = request.args.get('cid', "1")
    app.logger.debug("Accessing editplace.html", cid)
 
    place_info = getPlaceDetail(cid)
+   friends = getFriends(uid)
+   places = getPlaces()
 
    resp = flask.make_response(flask.render_template(
             'editplace.html',
-            place_info=place_info))
+            place_info=place_info,
+            places=places,
+            friends=friends))
    return resp
 
 @app.route('/placeUpdate', methods=["POST"])

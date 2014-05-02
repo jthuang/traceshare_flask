@@ -34,9 +34,9 @@
       <div class="detail-img-section">
         <div class="slider" id="detail-large-img-slider">
           <div class="slide-group">
-            {% for photo in place_info['photos'] %}
-            <div class="slide" name="{{ photo['name'] }}">
-               <img class="detail-large-img" src="{{ photo['url'] }}"/>
+            {% for photo_url in place_info['photo_urls'] %}
+            <div class="slide" name="photo-{{ loop.index }}">
+               <img class="detail-large-img" src="{{ photo_url }}"/>
             </div>
             {% endfor %}
           </div> <!-- end slide-group -->
@@ -44,8 +44,8 @@
       </div> <!-- end detail-img-section-->
 
       <div class="content-padded detail-img-thumb-section">
-            {% for photo in place_info['photos'] %}
-            <span name="{{ photo['name'] }}"><img class="detail-thumb-img" src="{{ photo['url'] }}"/><span class="icon icon-close"></span></span>
+            {% for photo_url in place_info['photo_urls'] %}
+            <span name="photo-{{ loop.index }}"><img class="detail-thumb-img" src="{{ photo_url }}"/><span class="icon icon-close"></span></span>
             {% endfor %}
             <span><span class="icon icon-plus"></span></span>
       </div>
@@ -54,10 +54,10 @@
         <div class="detail-travel-party-section">
           <span class="place-detail-section-title">YOUR TRAVEL PARTY</span>
           <a href="#pick-travelparty-modal">
-            <div class="content-padded">
-              <span id="travelparty-0"><img class="user-profile-pic" src="http://placehold.it/42x42"><span class="user-profile-name">Wendy</span></span>
-              <span id="travelparty-1"><img class="user-profile-pic" src="http://placehold.it/42x42"><span class="user-profile-name">Chan</span></span>
-              <span id="travelparty-2"><img class="user-profile-pic" src="http://placehold.it/42x42"><span class="user-profile-name">JT</span></span>
+             <div class="content-padded">
+                {% for user in place_info['users'] %}
+                <span id="travelparty-{{ user['uid'] }}"><img class="user-profile-pic" src="{{ user['pic_url'] }}"><span class="user-profile-name">{{ user['name'] }}</span></span>
+               {% endfor %}
             </div>
           </a>
         </div>
@@ -65,35 +65,34 @@
         <div class="place-comments">
           <div class="place-detail-section-title">YOUR EXPERIENCE HERE</div>
           <ul class="table-view">
-            <li class="table-view-cell media self-comment" id="comment-1">
+             {% for comment in place_info['comments'] %}
+             {% if comment['uid'] == place_info['host_uid'] %}
+            <li class="table-view-cell media self-comment" id="comment-{{ comment['comment_id'] }}">
                 <img class="media-object pull-left user-profile-pic" src="http://placehold.it/42x42">
                 <div class="media-body" contenteditable="true"  >
-                  <p>My favorites were the piano stairs and the Mirror Maze upstairs.</p>
+                   <p>{{ comment['comment_str'] }}</p>
                 </div>
                 <span class="icon icon-close del-comment-btn"></span>
             </li>
+            {% else %}
             <li class="table-view-cell media">
                 <img class="media-object pull-left user-profile-pic" src="http://placehold.it/42x42">
                 <div class="media-body">
-                  <p>Enjoyed hanging out with friends here. It's a lively place with nice view of the bay and so many restaurants to choose from. Pier 39 is worth a visit.</p>
+                  <p>{{ comment['comment_str'] }}</p>
                 </div>
             </li>
-            <li class="table-view-cell media">
-                <img class="media-object pull-left user-profile-pic" src="http://placehold.it/42x42">
-                <div class="media-body">
-                  <p>The animals are so cute! They were pushing each other. One of them looked like Chan! Haha</p>
-                </div>
-            </li>
+            {% endif %}
+            {% endfor %}
           </ul>
           <div class="icon icon-plus add-comment-btn"></div>
         </div> <!-- end place-comment section -->
         <div class="detail-share-section">
-             <span class="place-detail-section-title">SHARED WITH: </span><a href="#share-option-modal">Your Travel Party</a>
+           <span class="place-detail-section-title">SHARED WITH: </span><a href="#share-option-modal">{{ place_info['perm'] }}</a>
           </div>
       </div><!-- end detail-info-session -->
         
         <div>
-          <h5>Place: <a href="#pickplace-modal" id="current-place">Pier 39</a></h5>
+           <h5>Place: <a href="#pickplace-modal" id="current-place">{{ place_info['name'] }}</a></h5>
         </div>
         <div class="place-map">
           <div id="place-map-canvas">
@@ -113,10 +112,13 @@
             <input type="search" placeholder="Search Places" class="allplace-search-input">
           </form>
           <ul class="table-view" id="placemodal-place-tbl">
-              <li class="table-view-cell" id="place-1" lat="" lng=""><span class="icon icon-check"></span>Pier 39</li>
-              <li class="table-view-cell" id="place-2" lat="" lng="">Fisherman's Wharf</li>
-              <li class="table-view-cell" id="place-3" lat="" lng="">Bubba Gumps @ Pier 39</li>
-              <li class="table-view-cell" id="place-4" lat="" lng="">Golden Gate Ferry</li>
+              {% for p in places %}
+              {% if p['place_id'] == place_info['place_id'] %}
+              <li class="table-view-cell" id="place-{{ p['place_id'] }}" lat="{{ p['lat'] }}" lng="{{ p['long'] }}"><span class="icon icon-check"></span>{{ p['name'] }}</li>
+              {% else %}
+              <li class="table-view-cell" id="place-{{ p['place_id'] }}" lat="{{ p['lat'] }}" lng="{{ p['long'] }}">{{ p['name'] }}</li>
+              {% endif %}
+              {% endfor %}
           </ul>
         </div>
     </div> <!-- end pickplace modal -->
@@ -162,11 +164,13 @@
             </form>
           </div>
           <ul class="table-view" id="friend-list">
-            <li class="table-view-cell" id="userprofile-1"><span class="icon icon-check"></span>Chan</li>
-            <li class="table-view-cell" id="userprofile-2"><span class="icon icon-check"></span>JT</li>
-            <li class="table-view-cell" id="userprofile-3">Megan</li>
-            <li class="table-view-cell" id="userprofile-4">Kate</li>
-            <li class="table-view-cell" id="userprofile-5">James</li>
+            {% for f in friends %}
+            {% if f in place_info['users'] %}
+            <li class="table-view-cell" id="userprofile-{{ f['uid'] }}"><span class="icon icon-check"></span>{{ f['name'] }}</li>
+            {% else %}
+            <li class="table-view-cell" id="userprofile-{{ f['uid'] }}">{{ f['name'] }}</li>
+            {% endif %}
+            {% endfor %}
           </ul>
         </div> 
     </div><!-- end pick-travelparty-modal -->
