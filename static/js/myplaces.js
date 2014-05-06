@@ -1,14 +1,13 @@
 $(function(){
-    
-    $(".trace-search-form").submit(function(event){
-    	event.preventDefault();
-    	var placeOrJournal = $("#place-journal-toggle-btns a.active").text();
-    	console.log(placeOrJournal);
-    	$("#search-trace-bar").val("");
-    	$("#search-trace-cancel").hide();
-    	console.log("search for " + placeOrJournal);
-    });
-	animateTraceSearchBar();
+    animateTraceSearchBar();
+});
+$(".input-group").submit(function(event){
+    event.preventDefault();
+    var placeOrJournal = $("#place-journal-toggle-btns a.active").text();
+    $("#search-trace-bar").val("");
+    $("#search-trace-cancel").hide();
+    console.log(placeOrJournal);
+    console.log("search for " + placeOrJournal); 
 });
 
 function animateTraceSearchBar(){

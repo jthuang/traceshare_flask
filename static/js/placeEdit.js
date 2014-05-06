@@ -54,9 +54,9 @@ google.maps.event.addDomListener(window, 'load', initialize);
           //add check to this place
           $(this).prepend("<span class='icon icon-check'></span>");
           $("#current-place").html($(this).text());
-          marker.setPosition({lat: 37.8081420,lng:-122.4165950 });
+          marker.setPosition({lat: $(this).attr("lat"),lng:$(this).attr("lng") });
           marker.setTitle("New Position");
-          map.setCenter({lat: 37.8081420,lng:-122.4165950 });
+          map.setCenter({lat: $(this).attr("lat"),lng:$(this).attr("lng") });
         }
       });
   } //end function pickNewPlace()
@@ -125,8 +125,7 @@ function removeComment(){
 }
 function removePlaceImage(){
 	$(".detail-img-thumb-section .icon-close").on("click", function(){
-		var imgsrc = $(this).prev().attr("src");
-        var imgname = imgsrc.slice(imgsrc.lastIndexOf("/")+1, imgsrc.length);
+		var imgname = $(this).prev().attr("name");
         $(".slide[name='" + imgname + "']").remove();
         $("span[name='" + imgname+ "']").remove();
 	});

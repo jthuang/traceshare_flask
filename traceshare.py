@@ -7,6 +7,8 @@ from getPlaceDetail import getPlaceDetail
 from getJournalDetail import getJournalDetail
 from getFriends import getFriends
 from getPlaces import getPlaces
+from getUser import getUser
+import datetime
 
 app = flask.Flask(__name__)
 
@@ -71,6 +73,22 @@ def get_journal_detal():
             journal_info=journal_info))
    return resp
 
+@app.route('/capture')
+def capture():
+   # TODO: uid from session
+   uid = "1"
+   user = getUser(uid)
+   now_datetime = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+   friends = getFriends(uid)
+   places = getPlaces()
+   resp = flask.make_response(flask.render_template(
+            'capture.html',
+            user=user,
+            now_datetime=now_datetime,
+            places=places,
+            friends=friends))
+   return resp
+
 @app.route('/editplace', methods=["GET"])
 def edit_my_place():
    # TODO: uid from session
@@ -101,10 +119,6 @@ def update_my_place():
 #    resp = flask.make_response(flask.render_template('placeEdit.html'))
 #    return resp
 
-@app.route('/capture')
-def capture():
-   resp = flask.make_response(flask.render_template('capture.html'))
-   return resp
 
 if __name__ == "__main__":
    #get_my_trace()

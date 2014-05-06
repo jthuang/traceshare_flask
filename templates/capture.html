@@ -1,44 +1,172 @@
-<script>
-    function cameraCallback(imageData) {
-        var img = createImageWithBase64(imageData);
-        document.getElementById("cameraWrapper").appendChild(img);
-    }
-    function photolibraryCallback(imageData) {
-        var img = createImageWithBase64(imageData);
-        document.getElementById("photolibraryWrapper").appendChild(img);
-    }
-    function albumCallback(imageData) {
-        var img = createImageWithBase64(imageData);
-        document.getElementById("albumWrapper").appendChild(img);
-    }
-    function createImageWithBase64(imageData) {
-        var img = new Image();
-        img.src = "data:image/jpeg;base64," + imageData;
-        img.style.width = "50px";
-        img.style.height = "50px";
-        return img;
-    }
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+    <link rel="stylesheet" href="static/css/ratchet.min.css">
+    <link rel="stylesheet" href="static/css/ratchet-theme-ios.min.css">
+    <link rel="stylesheet" href="static/css/mytrace.css">
+    <script src="static/js/ratchet.js"></script>
+    <script type="text/javascript"
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB_p_A-nYE-Sn1VlJ_l-OsGcoynL_ExPIw&sensor=false"></script> 
+    
+    <script src="static/js/jquery-1.11.0.min.js"></script>
+    <script src="static/js/newPlace.js"></script>
+    <script>
+       function cameraCallback(imageData) {
+          var img = createImageWithBase64(imageData);
+          document.getElementById("cameraWrapper").appendChild(img)
+       }
+       function photolibraryCallback(imageData) {
+          var wrap_span = $(document.createElement('span'));
+          var img = createImageWithBase64(imageData);
+          wrap_span.append($(img).addClass("detail-thumb-img")).appendTo(".uploaded-from-camera-roll");
+       }
+       function albumCallback(imageData) {
+          var img = createImageWithBase64(imageData);
+          document.getElementById("albumWrapper").appendChild(img);
+       }
+       function createImageWithBase64(imageData) {
+          var img = new Image();
+          img.src = "data:image/jpeg;base64," + imageData;
+          // img.style.width = "50px";
+          // img.style.height = "50px";>")
+          return img;
+       }
 </script>
-<p style="text-align:center;padding:20px;">
-    <a href="js-call://camera/cameraCallback">take picture</a>&nbsp;&nbsp;
-    <a href="js-call://photolibrary/photolibraryCallback">camera roll</a>&nbsp;&nbsp;
-    <a href="js-call://album/albumCallback">album</a>
-</p>
+  </head>
+  <body>")
+    <header class="bar bar-nav">
+      <a class="btn btn-link pull-left" href="myPlaces.html" data-ignore="push">Cancel</a>
+      <h1 class="title">Capture</h1>
+      <!-- <a class="btn btn-link pull-right" href="placeDetail.html" data-ignore="push">Save</a> -->
+      <a class="btn btn-link pull-right" href="#">Save</a>
+    </header>
 
-<fieldset>
-    <legend>take picture</legend>
-    <div id="cameraWrapper">
-    </div>
-</fieldset>
+<!-- content ")arts here -->
+    <div class="content">
+      <div class="place-datetime">
+        {{ now_datetime }} 
+        <span class="icon icon-info small-icon"></span>
+      </div>
+      
+      <div class="content-padded">
+        <span class="uploaded-from-camera-roll">
+            <span><img class="detail-thumb-img" src="http://media-cdn.tripadvisor.com/media/photo-s/05/a6/f2/99/pier-39.jpg"/>
+            </span>
+        </span>
+        <span><a href="js-call://photolibrary/photolibraryCallback"><span class="icon icon-plus"></span></a></span>
+      </div>
 
-<fieldset>
-    <legend>camera roll</legend>
-    <div id="photolibraryWrapper">
-    </div>
-</fieldset>
+      <div class="detail-info-section">
+        
+        <div class="place-comments">
+          <div class="place-detail-section-title">YOUR EXPERIENCE HERE</div> 
+          <input type="textarea"></input> 
+        </div>
 
-<fieldset>
-    <legend>album</legend>
-    <div id="albumWrapper">
+        <div class="detail-travel-party-section">
+          <span class="place-detail-section-title">YOUR TRAVEL PARTY</span>
+            <a href="#pick-travelparty-modal">
+              <div class="content-padded">
+                 <span id="travelparty-{{ user['uid'] }}"><img class="user-profile-pic" src="{{ user['pic_url'] }}">
+                    <span class="user-profile-name">{{ user['name'] }}</span>
+                </span>
+              </div>
+            </a>
+        </div>
+         <div class="detail-share-section">
+            <span class="place-detail-section-title">SHARED WITH: </span> 
+              <a href="#share-option-modal">Your Travel Party</a>
+        </div>
+
+        <div>
+          <h5>Place: <a href="#pickplace-modal" id="current-place">Pier 39</a></h5>
+        </div>
+        <div class="place-map">
+          <div id="place-map-canvas">
+          </div>
+        </div>
+    </div><!-- end detail-info-session -->
+
+    <!-- pickplace modal-->
+    <div id="pickplace-modal" class="modal">
+      <header class="bar bar-nav">
+          <a class="icon icon-close pull-right" href="#pickplace-modal"></a>
+          <h1 class="title">Pick Place</h1>
+        </header>
+
+        <div class="content">
+          <form class="trace-search-bar">
+            <input type="search" placeholder="Search Places" class="allplace-search-input">
+          </form>
+          <ul class="table-view" id="placemodal-place-tbl">
+             {% for p in places %}
+             {% if loop.index == 0 %}
+               <li class="table-view-cell" id="place-{{ p['place_id'] }}" lat="{{ p['lat'] }}" lng="{{ p['long'] }}"><span class="icon icon-check"></span>{{ p['name'] }}</li>
+             {% else %}
+               <li class="table-view-cell" id="place-{{ p['place_id'] }}" lat="{{ p['lat'] }}" lng="{{ p['long'] }}">{{ p['name'] }}</li>
+             {% endif %}
+             {% endfor %}
+          </ul>
+        </div>
+    </div> <!-- end pickplace modal -->
+
+     <!-- share option modal-->
+    <div id="share-option-modal" class="modal">
+      <header class="bar bar-nav">
+        <a class="icon icon-close pull-right" href="#share-option-modal"></a>
+        <h1 class="title">Share With</h1>
+    </header>
+    <div class="content">
+        <ul class="table-view" id="sharing-options">
+          <li class="table-view-cell"><span class="icon icon-check"></span>Your Travel Party</li>
+          <li class="table-view-cell">Public</li>
+        </ul>
+        <div id="public-sharing-notify">
+            <p>Do you want to notify your travel party and ask for their consent to share the entire trip experience, including their comments and photos to the public?</p>
+            <p><b>Untill you have received their consents, only your own trip comments and photos will be shown to the public.</b></p>
+            <button class="btn btn-block" id="btn-ask-travel-party">Ask My Travel Party<span class="badge badge-primary">0</span></button>
+            <ul id="travel-party-response">
+              <li>
+                <span class="user-profile-name">JT said Yes</span>
+              </span>
+              </li>
+              <li>
+                <span class="user-profile-name">Chan said No</span>
+              </span>
+              </li>
+            </ul>
+        </div>
     </div>
-</fieldset>
+    </div> <!-- end share option modal -->
+
+    <div id="pick-travelparty-modal" class="modal">
+        <header class="bar bar-nav">
+           <a class="icon icon-close pull-right" href="#pick-travelparty-modal"></a>
+          <h1 class="title">Travel Party</h1>
+        </header>
+        <div class="content">
+          <div>
+            <form class="trace-search-bar">
+              <input type="search" placeholder="Search Friends" id="friend-search-bar">
+            </form>
+          </div>
+          <ul class="table-view" id="friend-list">
+             {% for f in friends %}
+               <li class="table-view-cell" id="userprofile-{{ f['uid'] }}">{{ f['name'] }}</li>
+             {% endfor %}
+          </ul>
+        </div> 
+    </div><!-- end pick-travelparty-modal -->
+
+    <form id="form-save-new-place" method="POST">
+    </form>
+    </div> <!-- end content -->
+  </body>
+</html>
