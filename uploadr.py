@@ -17,17 +17,30 @@ import tempfile
 ## Read Config from config.ini file
 ##
 
-import ConfigParser
-config = ConfigParser.ConfigParser()
-config.read(os.path.join(os.path.dirname(sys.argv[0]), "uploadr.ini"))
-FLICKR = eval(config.get('Config','FLICKR'))
-SLEEP_TIME = eval(config.get('Config','SLEEP_TIME'))
-DRIP_TIME = eval(config.get('Config','DRIP_TIME'))
-LOCK_PATH = eval(config.get('Config','LOCK_PATH'))
-TOKEN_PATH = eval(config.get('Config','TOKEN_PATH'))
-ALLOWED_EXT = eval(config.get('Config','ALLOWED_EXT'))
-FILE_MAX_SIZE = eval(config.get('Config','FILE_MAX_SIZE'))
-MANAGE_CHANGES = eval(config.get('Config','MANAGE_CHANGES'))
+#import ConfigParser
+#config = ConfigParser.ConfigParser()
+#config.read(os.path.join(os.path.dirname(sys.argv[0]), "uploadr.ini"))
+#FLICKR = eval(config.get('Config','FLICKR'))
+#SLEEP_TIME = eval(config.get('Config','SLEEP_TIME'))
+#DRIP_TIME = eval(config.get('Config','DRIP_TIME'))
+#LOCK_PATH = eval(config.get('Config','LOCK_PATH'))
+#TOKEN_PATH = eval(config.get('Config','TOKEN_PATH'))
+#ALLOWED_EXT = eval(config.get('Config','ALLOWED_EXT'))
+#FILE_MAX_SIZE = eval(config.get('Config','FILE_MAX_SIZE'))
+#MANAGE_CHANGES = eval(config.get('Config','MANAGE_CHANGES'))
+FLICKR = {
+        "title"                 : "",
+        "description"           : "",
+        "tags"                  : "trace-share",
+        "is_public"             : "1",
+        "is_friend"             : "0",
+        "is_family"             : "0",
+        "api_key"               : "06378d89754dd629d0a11295a33e246b",
+        "secret"                : "adc096544fb20f32"
+        }
+TOKEN_PATH = os.path.join(os.path.dirname(sys.argv[0]), ".flickrToken")
+
+
 
 
 class APIConstants:
