@@ -70,7 +70,7 @@ class Uploadr:
     def __init__( self ):
         """ Constructor
         """
-        self.token = self.getCachedToken()
+        self.token = "72157644489788246-c4522a5ff3ab102c"
 
 
     def signCall( self, data):
