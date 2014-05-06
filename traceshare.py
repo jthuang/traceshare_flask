@@ -8,6 +8,7 @@ from getJournalDetail import getJournalDetail
 from getFriends import getFriends
 from getPlaces import getPlaces
 from getUser import getUser
+from uploadr import FlickrUpload 
 import datetime
 
 app = flask.Flask(__name__)
@@ -118,6 +119,16 @@ def update_my_place():
 
 #    resp = flask.make_response(flask.render_template('placeEdit.html'))
 #    return resp
+
+@app.route('/uploadphoto', methods=["POST"])
+def upload_photo():
+   app.logger.debug("Accessing uploadphoto")
+   photo_info = {}
+   photo_data = request.form.get('data', "")
+   if photo_data != "":
+      photo_info = FlickrUpload(photo_data)
+   resp = flask.json.dumps(photo_info)
+   return resp
 
 
 if __name__ == "__main__":

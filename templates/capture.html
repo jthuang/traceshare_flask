@@ -19,28 +19,39 @@
     <script src="static/js/newPlace.js"></script>
     <script>
        function cameraCallback(imageData) {
-          var img = createImageWithBase64(imageData);
-          document.getElementById("cameraWrapper").appendChild(img)
+          $.post("/uploadphoto", {data: imageData}, function (photo_info) {
+             var wrap_span = $(document.createElement('span'));
+             var img = new Image();
+             img.src = photo_info.url;
+             wrap_span.append($(img).addClass("detail-thumb-img")).appendTo(".uploaded-from-camera-roll");
+          }, "json");
        }
        function photolibraryCallback(imageData) {
+          $.post("/uploadphoto", {data: imageData}, function (photo_info) {
+             var wrap_span = $(document.createElement('span'));
+             var img = new Image();
+             img.src = photo_info.url;
+             wrap_span.append($(img).addClass("detail-thumb-img")).appendTo(".uploaded-from-camera-roll");
+          }, "json");
+       //   var wrap_span = $(document.createElement('span'));
+       //   var img = createImageWithBase64(imageData);
+       //   wrap_span.append($(img).addClass("detail-thumb-img")).appendTo(".uploaded-from-camera-roll");
+       }
+       function albumCallback(imageData) {
           var wrap_span = $(document.createElement('span'));
           var img = createImageWithBase64(imageData);
           wrap_span.append($(img).addClass("detail-thumb-img")).appendTo(".uploaded-from-camera-roll");
-       }
-       function albumCallback(imageData) {
-          var img = createImageWithBase64(imageData);
-          document.getElementById("albumWrapper").appendChild(img);
        }
        function createImageWithBase64(imageData) {
           var img = new Image();
           img.src = "data:image/jpeg;base64," + imageData;
           // img.style.width = "50px";
-          // img.style.height = "50px";>")
+          // img.style.height = "50px";
           return img;
        }
 </script>
   </head>
-  <body>")
+  <body>
     <header class="bar bar-nav">
       <a class="btn btn-link pull-left" href="myPlaces.html" data-ignore="push">Cancel</a>
       <h1 class="title">Capture</h1>
@@ -48,7 +59,7 @@
       <a class="btn btn-link pull-right" href="#">Save</a>
     </header>
 
-<!-- content ")arts here -->
+<!-- content starts here -->
     <div class="content">
       <div class="place-datetime">
         {{ now_datetime }} 
