@@ -1,13 +1,25 @@
  var map;
  var marker;
  var lat;
- var long;
+ var lng;
+
+
+    $(function(){
+      navigator.geolocation.getCurrentPosition(foundLocation, noLocation);
+      google.maps.event.addDomListener(window, 'load', initialize);  
+      pickNewPlace();
+      updateSharingOptions();
+      updateTravelParty();
+      savePlace();
+      if(parseInt($("span.badge").html()) ==0){
+        $("#travel-party-response").hide();
+      }
+    });
 
     function initialize() {
       var mapOptions = {
         zoom: 16,
-        // center: {lat: 37.8086730, lng:-122.4098210},
-        center: new google.maps.LatLng(37.8086730, -122.4098210),
+        center: new google.maps.LatLng(lat, lng),
         mapTypeControl: false,
         zoomControl: true,
         zoomControlOptions: {
@@ -19,32 +31,27 @@
           mapOptions);
     
       marker = new google.maps.Marker({
-                      position: {lat: 37.8086730, lng:-122.4098210},
+                      position: {lat: lat, lng: lng},
                       map: map,
                       title:"Pier 39"
                       });
 
     }
-    google.maps.event.addDomListener(window, 'load', initialize);  
-
-    $(function(){
-      navigator.geolocation.getCurrentPosition(foundLocation, noLocation);
-      pickNewPlace();
-      updateSharingOptions();
-      updateTravelParty();
-      savePlace();
-      if(parseInt($("span.badge").html()) ==0){
-        $("#travel-party-response").hide();
-      }
-    });
-
 
   function foundLocation(position) {
      lat = position.coords.latitude;
-     long = position.coords.longitude;
-     console.log(lat, long);
+     lng = position.coords.longitude;
+     console.log(lat, lng);
+     getPlaceName();
+     initialize();
   }
   function noLocation() {}
+
+  function getPlaceName() {
+     $.get("/getplacename", {lat: lat, lng: lng}, function (place_info) {
+        $("#current-place").html(place_info.name);
+     }, "json");
+  }
 
   function pickNewPlace(){
     $("#placemodal-place-tbl li").on("click", function(){
@@ -55,11 +62,11 @@
           $(this).prepend("<span class='icon icon-check'></span>");
           $("#current-place").html($(this).text());
 
-          var lat = $(this).attr("lat");
-          var lng = $(this).attr("lng");
-          marker.setPosition({lat: 37.8081420,lng:-122.4165950 });
+          var lat = parseFloat($(this).attr("lat"));
+          var lng = parseFloat($(this).attr("lng"));
+          marker.setPosition({lat: lat, lng: lng });
           marker.setTitle($(this).text());
-          map.setCenter({lat: 37.8081420,lng:-122.4165950 });
+          map.setCenter({lat: lat, lng: lng });
         }
       });
   } //end function pickNewPlace()

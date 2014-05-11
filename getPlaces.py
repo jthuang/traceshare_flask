@@ -3,7 +3,7 @@
 import sys
 import sqlite3
 
-GET_PLACES_EXPR = "SELECT place_id, name, lat, long FROM places;"
+GET_PLACES_EXPR = "SELECT place_id, name, lat, long FROM places ORDER BY place_id DESC;"
 
 # input  : 
 # output : places

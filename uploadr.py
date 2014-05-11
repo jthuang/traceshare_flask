@@ -495,6 +495,13 @@ def FlickrUpload(in_data):
 
     return photo_info
 
+def FlickrGetPlaceName(lat, lng):
+    flick = Uploadr()
+    place_info = {}
+    place_info['name'] = flick.getPhotoPlace(lat, lng, 16)
+    if place_info['name'] == "UC Berkeley":
+        place_info['name'] = "UC Berkeley I School"
+    return place_info
 
 if __name__ == "__main__":
    if len(sys.argv) != 2:

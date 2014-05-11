@@ -8,10 +8,11 @@ from getJournalDetail import getJournalDetail
 from getFriends import getFriends
 from getPlaces import getPlaces
 from getUser import getUser
-from uploadr import FlickrUpload 
+from uploadr import FlickrUpload, FlickrGetPlaceName
 from getExploredPlaces import getExploredPlaces
 from getExploredJournals import getExploredJournals
 from saveMyPlace import saveMyPlace
+from getPlaceByGeo import getPlaceByGeo
 import datetime
 
 app = flask.Flask(__name__)
@@ -190,6 +191,20 @@ def upload_photo():
    if photo_data != "":
       photo_info = FlickrUpload(photo_data)
    resp = flask.json.dumps(photo_info)
+   return resp
+
+@app.route('/getplacename', methods=["GET"])
+def get_place_name():
+   lat = request.args.get('lat', "")
+   lng = request.args.get('lng', "")
+   app.logger.debug("Accessing getplacename %s, %s" % (lat, lng))
+   # first check local DB
+   place_info = getPlaceByGeo(lat, lng)
+   if place_info == {}:
+       # else check Flickr
+       place_info = FlickrGetPlaceName(lat, lng)
+
+   resp = flask.json.dumps(place_info)
    return resp
 
 
