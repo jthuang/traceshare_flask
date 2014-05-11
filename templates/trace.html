@@ -18,12 +18,19 @@
   </head>
   <body>
     <header class="bar bar-nav">
+      {% if option == "explore" %}
+      <a class="btn btn-link pull-left" href="/exploremap" data-ignore="push">
+        Map
+      </a>
+      <h1 class="title">Explore</h1>
+      {% else %}
       <a class="btn btn-link pull-right" href="newJournal.html" data-ignore="push">
         Add Journal</a>
       <a class="btn btn-link pull-left" href="/placemap" data-ignore="push">
         Map
       </a>
       <h1 class="title">My Trace</h1>
+      {% endif %}
     </header>
 
     <div class="bar bar-standard bar-header-secondary">

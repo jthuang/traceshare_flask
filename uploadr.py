@@ -69,7 +69,6 @@ class Uploadr:
             foo += (a + data[a])
 
         f = FLICKR[ "secret" ] + "api_key" + FLICKR[ "api_key" ] + foo
-        #f = "api_key" + FLICKR[ "api_key" ] + foo
 
         return hashlib.md5( f ).hexdigest()
 
@@ -422,7 +421,7 @@ class Uploadr:
         L.append('--' + BOUNDARY + '--')
         L.append('')
         body = CRLF.join(L)
-        content_type = 'multipart/form-data; boundary=%s' % BOUNDARY        # XXX what if no files are encoded
+        content_type = 'multipart/form-data; boundary=%s' % BOUNDARY        # what if no files are encoded
         return content_type, body
 
     def isGood( self, res ):

@@ -36,7 +36,7 @@ def getMyJournals(uid):
          checkin['cid'] = cid[0]
          journal_info['checkins'].append(checkin)
 
-   # get place_id, "at, long of the checkins
+   # get place_id, lat, long of the checkins
    for journal_info in journals:
       for checkin in journal_info['checkins']:
          # get place_id

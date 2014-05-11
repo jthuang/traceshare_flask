@@ -78,8 +78,13 @@
   </head>
   <body>
     <header class="bar bar-nav">
+      {% if option == "explore" %}
+      <a class="icon icon-left-nav pull-left" href="/explore" data-ignore="push"></a>
+      <h1 class="title">Explore</h1>
+      {% else %}
       <a class="icon icon-left-nav pull-left" href="/mytrace" data-ignore="push"></a>
       <h1 class="title">My Trace</h1>
+      {% endif %}
     </header>
 
 <!-- content starts here -->
