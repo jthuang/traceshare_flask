@@ -1,5 +1,8 @@
  var map;
-    var marker;
+ var marker;
+ var lat;
+ var long;
+
     function initialize() {
       var mapOptions = {
         zoom: 16,
@@ -25,6 +28,7 @@
     google.maps.event.addDomListener(window, 'load', initialize);  
 
     $(function(){
+      navigator.geolocation.getCurrentPosition(foundLocation, noLocation);
       pickNewPlace();
       updateSharingOptions();
       updateTravelParty();
@@ -33,6 +37,14 @@
         $("#travel-party-response").hide();
       }
     });
+
+
+  function foundLocation(position) {
+     lat = position.coords.latitude;
+     long = position.coords.longitude;
+     console.log(lat, long);
+  }
+  function noLocation() {}
 
   function pickNewPlace(){
     $("#placemodal-place-tbl li").on("click", function(){
