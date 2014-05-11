@@ -114,6 +114,7 @@
   		var dateTime = $(".place-datetime").text();
   		var images = $(".uploaded-from-camera-roll img");
   		var travelParty = $(".detail-travel-party-section .content-padded").children("span");
+  		var picUrl = $(".uploaded-from-camera-roll").children("span").children("img");
   		var comments = $(".place-comments input").val();
   		var shareOption = $(".detail-share-section a").text();
 
@@ -122,11 +123,24 @@
   		createFormInput("selfComment", comments);
   		createFormInput("shareOption",shareOption);
 
+                travel_party = new Array();
   		travelParty.each(function(){
-  			createFormInput("travelparty-"+$(this).attr("id"), $(this).attr("id"));
+  		   travel_party.push($(this).attr("id"));
   		});
+  	        createFormInput("travelParty", travel_party.toString());
+
+  	        pic_url = new Array();
+  		picUrl.each(function(){
+  		   pic_url.push($(this).attr("src"));
+  		});
+  	        createFormInput("picUrl", pic_url.toString());
+
+
+  		form = $("#form-save-new-place");
+  		form.submit();
 
   	});
+
   }
 
   function createFormInput(name, value){

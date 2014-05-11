@@ -118,7 +118,7 @@
           </form>
           <ul class="table-view" id="placemodal-place-tbl">
              {% for p in places %}
-             {% if loop.index == 0 %}
+             {% if loop.index == 1 %}
                <li class="table-view-cell" id="place-{{ p['place_id'] }}" lat="{{ p['lat'] }}" lng="{{ p['long'] }}"><span class="icon icon-check"></span>{{ p['name'] }}</li>
              {% else %}
                <li class="table-view-cell" id="place-{{ p['place_id'] }}" lat="{{ p['lat'] }}" lng="{{ p['long'] }}">{{ p['name'] }}</li>
@@ -176,7 +176,7 @@
         </div> 
     </div><!-- end pick-travelparty-modal -->
 
-    <form id="form-save-new-place" method="POST">
+    <form id="form-save-new-place" action="/saveplace" method="POST">
     </form>
     </div> <!-- end content -->
   </body>

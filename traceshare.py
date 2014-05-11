@@ -11,6 +11,7 @@ from getUser import getUser
 from uploadr import FlickrUpload 
 from getExploredPlaces import getExploredPlaces
 from getExploredJournals import getExploredJournals
+from saveMyPlace import saveMyPlace
 import datetime
 
 app = flask.Flask(__name__)
@@ -131,12 +132,13 @@ def capture():
 @app.route('/saveplace', methods=["POST"])
 def save_my_place():
    # get args
+   uid = request.args.get('uid', "1")
    now_datetime = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
    date_time = request.form.get('dateTime', now_datetime)
    pic_url = request.form.get('picUrl', "")
    comment = request.form.get('selfComment', "")
    travel_party = request.form.get('travelParty', "")
-   perm = request.args.get('shareOption', "1")
+   perm = request.form.get('shareOption', "public")
    place_id = request.form.get('placeId', "1")
    app.logger.debug("Accessing saveplace.html, datetime: %s", date_time)
    app.logger.debug("Accessing saveplace.html, pic_url: %s", pic_url)
@@ -146,7 +148,7 @@ def save_my_place():
    app.logger.debug("Accessing saveplace.html, place_id: %s", place_id)
 
    # save place
-   #saveMyPlace(date_time, pic_url, comment, trave_party, perm, place_id)
+   saveMyPlace(uid, date_time, pic_url, comment, travel_party, perm, place_id)
    
    return flask.redirect(flask.url_for('get_my_trace'))
 
