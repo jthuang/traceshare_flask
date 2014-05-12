@@ -19,11 +19,12 @@
     <script src="static/js/newPlace.js"></script>
     <script>
        function cameraCallback(imageData) {
+          var wrap_span = $(document.createElement('span'));
+          var img = new Image();
+          img.src = "data:image/jpeg;base64," + imageData;
+          wrap_span.append($(img).addClass("detail-thumb-img")).appendTo(".uploaded-from-camera-roll");
           $.post("/uploadphoto", {data: imageData}, function (photo_info) {
-             var wrap_span = $(document.createElement('span'));
-             var img = new Image();
              img.src = photo_info.url;
-             wrap_span.append($(img).addClass("detail-thumb-img")).appendTo(".uploaded-from-camera-roll");
           }, "json");
        }
        function photolibraryCallback(imageData) {
