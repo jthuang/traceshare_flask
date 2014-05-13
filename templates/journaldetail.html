@@ -16,12 +16,26 @@
         padding-left:10px;
       }
     </style>
+    <script src="static/js/jquery-1.11.0.min.js"></script>
+    <script>
+      $(function(){
+            $("#preview_journal_cancel").on("click", function(){
+               $.post("/deljournal", {jid: {{ journal_info['jid'] }} }, function () {}, "json");
+            });
+      });
+    </script>
   </head>
   <body>
     <header class="bar bar-nav">
+      {% if option == "previewjournal" %}
+      <a class="icon icon-left-nav pull-left" href="javascript:history.back()" data-ignore="push" id="preview_journal_cancel"></a>
+      <h1 class="title">{{ journal_info['name'] }}</h1>
+      <a class="btn btn-link pull-right" href="mytrace">Save</a>
+      {% else %}
       <a class="icon icon-left-nav pull-left" href="javascript:history.back()" data-ignore="push"></a>
       <h1 class="title">{{ journal_info['name'] }}</h1>
       <a class="btn btn-link pull-right">Edit</a>
+      {% endif %}
     </header>
 <!-- content starts here -->
     <div class="content">

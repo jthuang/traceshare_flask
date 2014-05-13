@@ -16,12 +16,12 @@
       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB_p_A-nYE-Sn1VlJ_l-OsGcoynL_ExPIw&sensor=false"></script> 
     
     <script src="static/js/jquery-1.11.0.min.js"></script>
+    <script src="static/js/publicPlaceDetail.js"></script>
        <script> 
     var map;
     function initialize() {
       var mapOptions = {
         zoom: 16,
-        // center: {lat: 37.8086730, lng:-122.4098210},
         center: new google.maps.LatLng({{ place_info['lat'] }}, {{ place_info['long'] }}),
         mapTypeControl: false,
         zoomControl: true,
@@ -46,21 +46,29 @@
   </head>
   <body>
     <header class="bar bar-nav">
+      {% if option == "explore" %}
+      <a class="icon icon-left-nav pull-left" href="explore" data-ignore="push"></a>
+      {% else %}
       <a class="icon icon-left-nav pull-left" href="mytrace" data-ignore="push"></a>
+      {% endif %}
       <h1 class="title">{{ place_info['name'] }}</h1>
+      {% if option == "explore" %}
+      {% else %}
       <a class="btn btn-link pull-right" href="/editplace?cid={{ place_info['cid'] }}" data-ignore="push">Edit</a>
+      {% endif %}
     </header>
 
 <!-- content starts here -->
     <div class="content">
-      <div class="place-detail-datetime">{{ place_info['time'] }}
-                <span class="icon icon-info small-icon"></span>
-      </div>
       <div class="detail-img-section">
+        <div class="photo-datetime">{{ place_info['time'] }}</div>
+        {% if option == "explore" %}
+        <div class="like-info"><span class="icon icon-star"></span>250</div>
+        {% endif %}
         <div class="slider" id="detail-large-img-slider">
           <div class="slide-group">
             {% for photo_url in place_info['photo_urls'] %}
-            <div class="slide">
+            <div class="slide" name="photo-{{ loop.index }}">
                <img class="detail-large-img" src="{{ photo_url }}"/>
             </div>
             {% endfor %}
@@ -68,6 +76,21 @@
           
         </div>     
       </div>
+
+      <div><a href="#" id="btn-view-more-thumb" class="btn btn-link">Show Thumbnails</a></div>
+      <div class ="public-img-thumb-section">
+        <div class="img-thumb-sort">
+          Sort By: 
+          <a href="#" class="btn btn-outlined">Most Recent</a>
+          <a href="#" class="btn btn-outlined">Most Popular</a>
+        </div>
+        <div class="content-padded">
+            {% for photo_url in place_info['photo_urls'] %}
+            <span name="photo-{{ loop.index }}"><img class="detail-thumb-img" src="{{ photo_url }}"/></span>
+            {% endfor %}
+        </div>
+      </div>
+
       <div class="detail-info-section">
         <div class="detail-travel-party-section">
           <span class="place-detail-section-title">YOUR TRAVEL PARTY</span>
@@ -89,7 +112,12 @@
             {% endfor %}
           </ul>
           <div class="detail-share-section">
-             <span class="place-detail-section-title">SHARED WITH: </span>{{ place_info['perm'] }}
+             <span class="place-detail-section-title">SHARED WITH: </span>
+             {% if place_info['perm'] == 0 %}
+             Public
+             {% else %}
+             Your Travel Party
+             {% endif %}
           </div>
         </div>
         <div class="place-map">
@@ -97,6 +125,11 @@
           </div>
         </div>
       </div>
+      {% if option == "explore" %}
+      <div>
+        <button class="btn btn-block" id="btn-add-favorite">Add to Favorite</button>
+      </div>
+      {% endif %}
     </div><!-- /.content -->
   </body>
 </html>

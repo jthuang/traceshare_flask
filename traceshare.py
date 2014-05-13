@@ -13,6 +13,8 @@ from getExploredPlaces import getExploredPlaces
 from getExploredJournals import getExploredJournals
 from saveMyPlace import saveMyPlace
 from getPlaceByGeo import getPlaceByGeo
+from saveMyJournal import saveMyJournal
+from delMyJournal import delMyJournal
 import datetime
 
 app = flask.Flask(__name__)
@@ -99,7 +101,21 @@ def get_place_detal():
 
    resp = flask.make_response(flask.render_template(
             'placedetail.html',
-            place_info=place_info))
+            place_info=place_info,
+            option="mytrace"))
+   return resp
+
+@app.route('/exploredplacedetail', methods=["GET"])
+def get_explored_place_detal():
+   cid = request.args.get('cid', "1")
+   app.logger.debug("Accessing exploredplacedetail.html %s", cid)
+   
+   place_info = getPlaceDetail(cid)
+
+   resp = flask.make_response(flask.render_template(
+            'placedetail.html',
+            place_info=place_info,
+            option="explore"))
    return resp
 
 @app.route('/journaldetail', methods=["GET"])
@@ -151,8 +167,50 @@ def save_my_place():
    # save place
    saveMyPlace(uid, date_time, pic_url, comment, travel_party, perm, place_id)
    
-   return flask.redirect(flask.url_for('get_my_trace'))
+   return flask.redirect(flask.url_for('capture'))
 
+'''
+@app.route('/previewjournaldetail', methods=["POST"])
+def preview_journal_detail():
+    return
+'''
+
+@app.route('/previewjournal', methods=["POST"])
+def preview_journal():
+   # get args
+   uid = request.args.get('uid', "1")
+   now_datetime = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+   date_time = request.form.get('dateTime', now_datetime)
+   title = request.form.get('title', "")
+   desp = request.form.get('desp', "")
+   cids = request.form.get('cids', "")
+   perm = request.form.get('shareOption', "public")
+   app.logger.debug("Accessing previewjournal.html, datetime: %s", date_time)
+   app.logger.debug("Accessing previewjournal.html, title: %s", title)
+   app.logger.debug("Accessing previewjournal.html, desp: %s", desp)
+   app.logger.debug("Accessing previewjournal.html, cids: %s", cids)
+   app.logger.debug("Accessing previewjournal.html, perm: %s", perm)
+
+   # save journal
+   jid = saveMyJournal(uid, date_time, title, desp, perm, cids)
+
+   # show journal
+   journal_info = getJournalDetail(jid)
+   resp = flask.make_response(flask.render_template(
+            'journaldetail.html',
+            journal_info=journal_info,
+            option="previewjournal"))
+   return resp
+
+@app.route('/deljournal', methods=["POST"])
+def del_my_journal():
+   uid = request.form.get('uid', 1)
+   jid = request.form.get('jid', "")
+   app.logger.debug("Accessing deljournal.html %s %s", uid, jid)
+
+   delMyJournal(uid, jid)
+
+   return ""
 
 @app.route('/editplace', methods=["GET"])
 def edit_my_place():
@@ -182,6 +240,16 @@ def update_my_place():
 
 #    resp = flask.make_response(flask.render_template('placeEdit.html'))
 #    return resp
+
+@app.route('/createjournal')
+def create_journal():
+   uid = request.args.get('uid', "1")
+   app.logger.debug("Accessing createjournal.html %s", uid)
+   places = getMyPlaces(uid)
+   resp = flask.make_response(flask.render_template(
+            'createjournal.html',
+            places=places))
+   return resp
 
 @app.route('/uploadphoto', methods=["POST"])
 def upload_photo():

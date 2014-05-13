@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+    <link rel="stylesheet" href="static/css/ratchet.css">
+    <link rel="stylesheet" href="static/css/ratchet-theme-ios.min.css">
+    <link rel="stylesheet" href="static/css/mytrace.css">
+    <style>
+
+      input[type=checkbox]{
+        float:right;
+        z-index: 999;
+        position:relative;
+        top:-80px;
+        right:-50px;
+      }
+      .place-card{
+        z-index:0;
+
+      }
+      .place-map{
+        display: none;
+      }
+
+    </style>
+    <script>
+       function photolibraryCallback(imageData) {
+          var wrap_span = $(document.createElement('span'));
+          var img = new Image();
+          img.src = "data:image/jpeg;base64," + imageData;
+          wrap_span.append($(img).addClass("detail-thumb-img")).appendTo(".uploaded-from-camera-roll");
+          $.post("/uploadphoto", {data: imageData}, function (photo_info) {
+             img.src = photo_info.url;
+          }, "json");
+       }
+  </script>
+  </head>
+  <body>
+    <header class="bar bar-nav">
+      <a class="icon icon-left-nav pull-left" href="mytrace" data-transition="slide-out"></a>
+      <h1 class="title">Add a journal</h1>
+      <a class="btn btn-link pull-right" id="preview" href="#" data-ignore="push">Preview</a>
+    </header>
+<!-- content starts here -->
+    <div class="content">
+        <form>
+          <label name="title">Title</label><input type="text" name="title"></input>
+          <label name="desp">Description</label><input type="text" name="desp"></input>
+          <label name="photos">Upload Photo(s):</label>
+          <span><a href="js-call://photolibrary/photolibraryCallback"><span class="icon icon-plus"></span></a></span>
+        </form>
+        <p class="label-description">Or choose place(s) you have been</p>
+        <ul class="table-view">
+          {% for p in places %}
+          <li class="table-view-cell">
+            <a class="place-card" href="placeDetail.html" data-transition="slide-in">
+               <div class="place-datetime">{{ p['time'] }}</div>
+              <img class="place-card-img" src="{{ p['photo_url'] }}"/>
+              <div class="place-info">
+                <div class="place-name">{{ p['place_name'] }}</div>
+              </div>
+            </a>
+            <input type="checkbox" class="checkin-detail" id="cid-{{ p['cid'] }}"></input>
+          </li>
+          {% endfor %}
+        </ul>
+
+    <form id="form-preview-journal" action="/previewjournal" method="POST">
+    </form>
+    </div><!-- /.content -->
+    <script src="static/js/ratchet.js"></script>
+    <script src="static/js/jquery-1.11.0.min.js"></script>
+    <script src="static/js/newJournal.js"></script>
+  </body>
+</html>

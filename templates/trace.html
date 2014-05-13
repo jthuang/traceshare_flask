@@ -24,7 +24,7 @@
       </a>
       <h1 class="title">Explore</h1>
       {% else %}
-      <a class="btn btn-link pull-right" href="newJournal.html" data-ignore="push">
+      <a class="btn btn-link pull-right" href="createjournal" data-ignore="push">
         Add Journal</a>
       <a class="btn btn-link pull-left" href="/placemap" data-ignore="push">
         Map
@@ -56,7 +56,7 @@
          <ul class="table-view">
             {% for p in places %}
             <li class="table-view-cell">
-            <a class="place-card" href="placedetail?cid={{ p['cid'] }}" data-ignore="push">
+            <a class="place-card" href="{% if option == "explore" %}explored{% endif %}placedetail?cid={{ p['cid'] }}" data-ignore="push">
                <div class="place-datetime">{{ p['time'] }} 
                   <span class="icon icon-info small-icon"></span></div>
                <img class="place-card-img" src="{{ p['photo_url'] }}"/>

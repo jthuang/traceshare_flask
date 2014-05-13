@@ -27,29 +27,6 @@
              img.src = photo_info.url;
           }, "json");
        }
-       function photolibraryCallback(imageData) {
-          $.post("/uploadphoto", {data: imageData}, function (photo_info) {
-             var wrap_span = $(document.createElement('span'));
-             var img = new Image();
-             img.src = photo_info.url;
-             wrap_span.append($(img).addClass("detail-thumb-img")).appendTo(".uploaded-from-camera-roll");
-          }, "json");
-       //   var wrap_span = $(document.createElement('span'));
-       //   var img = createImageWithBase64(imageData);
-       //   wrap_span.append($(img).addClass("detail-thumb-img")).appendTo(".uploaded-from-camera-roll");
-       }
-       function albumCallback(imageData) {
-          var wrap_span = $(document.createElement('span'));
-          var img = createImageWithBase64(imageData);
-          wrap_span.append($(img).addClass("detail-thumb-img")).appendTo(".uploaded-from-camera-roll");
-       }
-       function createImageWithBase64(imageData) {
-          var img = new Image();
-          img.src = "data:image/jpeg;base64," + imageData;
-          // img.style.width = "50px";
-          // img.style.height = "50px";
-          return img;
-       }
 </script>
   </head>
   <body>
