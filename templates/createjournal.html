@@ -36,6 +36,11 @@
           wrap_span.append($(img).addClass("detail-thumb-img")).appendTo(".uploaded-from-camera-roll");
           $.post("/uploadphoto", {data: imageData}, function (photo_info) {
              img.src = photo_info.url;
+             $.post("/saveplace", {picUrl: photo_info.url, placeId: photo_info.place_id, flag: "create_journal"}, function(checkin_info) {
+                console.log(checkin_info.cid);
+                tmp_cids.push("cid-"+checkin_info.cid);
+                console.log(tmp_cids.toString());
+             }, "json");
           }, "json");
        }
   </script>

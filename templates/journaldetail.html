@@ -20,7 +20,7 @@
     <script>
       $(function(){
             $("#preview_journal_cancel").on("click", function(){
-               $.post("/deljournal", {jid: {{ journal_info['jid'] }} }, function () {}, "json");
+               $.post("/deljournal", {jid: {{ journal_info['jid'] }}, tmp_cids: "{{ tmp_cids }}" }, function () {}, "json");
             });
       });
     </script>

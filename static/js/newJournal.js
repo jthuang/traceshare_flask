@@ -2,6 +2,7 @@
  var marker;
  var lat;
  var lng;
+ var tmp_cids = new Array();
 
 
     $(function(){
@@ -23,12 +24,14 @@
                    }
   		});
   		console.log(cids.toString());
+  		console.log(tmp_cids.toString());
 
 
   		createFormInput("title", title);
   		createFormInput("desp", desp);
   		createFormInput("shareOption",shareOption);
-  		createFormInput("cids", cids);
+  		createFormInput("cids", cids.toString());
+  		createFormInput("tmp_cids", tmp_cids.toString());
 
 
   		form = $("#form-preview-journal");

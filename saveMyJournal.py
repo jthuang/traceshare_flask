@@ -8,7 +8,7 @@ import calendar
 INSERT_JOURNAL_EXPR = "INSERT INTO journals VALUES(NULL,?,?,?,?,?);"
 INSERT_JOURNAL_CHECKINS_EXPR = "INSERT INTO journal_checkins VALUES(?,?)"
 
-def saveMyJournal(uid, date_time, title, desp, perm, cid_str):
+def saveMyJournal(uid, date_time, title, desp, perm, cid_str, tmp_cid_str):
     # process date_time
     date_time = calendar.timegm(datetime.datetime.now().timetuple())
     # process perm
@@ -16,12 +16,20 @@ def saveMyJournal(uid, date_time, title, desp, perm, cid_str):
     if perm == "Your Travel Party":
         perm = 1
 
+    cids = []
     # process cid
     cstrs = cid_str.split(',')
-    cids = []
     for cstr in cstrs:
         idx = cstr.rfind("-")
-        cids.append(cstr[idx+1])
+        if idx != -1:
+            cids.append(cstr[idx+1])
+
+    # process tmp_cid
+    cstrs = tmp_cid_str.split(',')
+    for cstr in cstrs:
+        idx = cstr.rfind("-")
+        if idx != -1:
+            cids.append(cstr[idx+1])
 
     print date_time
     print perm

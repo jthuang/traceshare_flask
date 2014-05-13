@@ -157,6 +157,7 @@ def save_my_place():
    travel_party = request.form.get('travelParty', "")
    perm = request.form.get('shareOption', "public")
    place_id = request.form.get('placeId', "1")
+   flag = request.form.get('flag', "")
    app.logger.debug("Accessing saveplace.html, datetime: %s", date_time)
    app.logger.debug("Accessing saveplace.html, pic_url: %s", pic_url)
    app.logger.debug("Accessing saveplace.html, comment: %s", comment)
@@ -165,9 +166,17 @@ def save_my_place():
    app.logger.debug("Accessing saveplace.html, place_id: %s", place_id)
 
    # save place
-   saveMyPlace(uid, date_time, pic_url, comment, travel_party, perm, place_id)
+   cid = saveMyPlace(uid, date_time, pic_url, comment, travel_party, perm, place_id)
    
-   return flask.redirect(flask.url_for('capture'))
+   app.logger.debug("Accessing saveplace.html, checkin! cid: %s", cid)
+   if flag == "create_journal":
+       app.logger.debug("Accessing saveplace.html, call from createjournal, cid: %s", cid)
+       checkin_info = {}
+       checkin_info['cid'] = cid
+       resp = flask.json.dumps(checkin_info)
+       return resp
+   else:
+       return flask.redirect(flask.url_for('capture'))
 
 '''
 @app.route('/previewjournaldetail', methods=["POST"])
@@ -184,21 +193,24 @@ def preview_journal():
    title = request.form.get('title', "")
    desp = request.form.get('desp', "")
    cids = request.form.get('cids', "")
+   tmp_cids = request.form.get('tmp_cids', "")
    perm = request.form.get('shareOption', "public")
    app.logger.debug("Accessing previewjournal.html, datetime: %s", date_time)
    app.logger.debug("Accessing previewjournal.html, title: %s", title)
    app.logger.debug("Accessing previewjournal.html, desp: %s", desp)
    app.logger.debug("Accessing previewjournal.html, cids: %s", cids)
+   app.logger.debug("Accessing previewjournal.html, tmp_cids: %s", tmp_cids)
    app.logger.debug("Accessing previewjournal.html, perm: %s", perm)
 
    # save journal
-   jid = saveMyJournal(uid, date_time, title, desp, perm, cids)
+   jid = saveMyJournal(uid, date_time, title, desp, perm, cids, tmp_cids)
 
    # show journal
    journal_info = getJournalDetail(jid)
    resp = flask.make_response(flask.render_template(
             'journaldetail.html',
             journal_info=journal_info,
+            tmp_cids=tmp_cids,
             option="previewjournal"))
    return resp
 
@@ -206,9 +218,10 @@ def preview_journal():
 def del_my_journal():
    uid = request.form.get('uid', 1)
    jid = request.form.get('jid', "")
-   app.logger.debug("Accessing deljournal.html %s %s", uid, jid)
+   tmp_cids = request.form.get('tmp_cids', "")
+   app.logger.debug("Accessing deljournal.html %s %s %s", uid, jid, tmp_cids)
 
-   delMyJournal(uid, jid)
+   delMyJournal(uid, jid, tmp_cids)
 
    return ""
 

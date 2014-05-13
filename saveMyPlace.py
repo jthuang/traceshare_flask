@@ -28,7 +28,8 @@ def saveMyPlace(uid, date_time, pic_url_str, comment, travel_party_str, perm, pl
     travel_party = []
     for tstr in travel_party_strs:
         idx = tstr.rfind("-")
-        travel_party.append(tstr[idx+1])
+        if idx != -1:
+            travel_party.append(tstr[idx+1])
         
 
     # start inserting
@@ -55,6 +56,8 @@ def saveMyPlace(uid, date_time, pic_url_str, comment, travel_party_str, perm, pl
     # commit to database
     conn.commit()
     conn.close()
+
+    return cid
 
 if __name__ == "__main__":
     saveMyPlace("1", "", "http://media-cdn.tripadvisor.com/media/photo-s/05/a6/f2/99/pier-39.jpg,http://media-cdn.tripadvisor.com/media/photo-s/05/a6/f0/f7/the-boys.jpg", "test comment", "travelparty-1, travelparty-2", "Your Travel Party", "place-1")

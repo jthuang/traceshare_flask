@@ -12,6 +12,8 @@ import json
 from xml.dom.minidom import parse
 import base64
 import tempfile
+import sqlite3
+from updatePlaceDB import updatePlaceDB
 
 FLICKR = {
         "title"                 : "",
@@ -492,6 +494,9 @@ def FlickrUpload(in_data):
     else:
        photo_info['place'] = ""
     print photo_info['place']
+
+    # try to update 'places' DB
+    photo_info['place_id'] = updatePlaceDB(photo_info['place'], photo_info['lat'], photo_info['long'])
 
     return photo_info
 
