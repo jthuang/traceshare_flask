@@ -53,6 +53,11 @@
          <label name="photos">Upload Photo(s):</label>
          <span><a href="js-call://photolibrary/photolibraryCallback"><span class="icon icon-plus"></span></a></span>
         <p class="label-description">Or choose place(s) you have been</p>
+      <div class="content-padded">
+        <span class="uploaded-from-camera-roll">
+        </span>
+        <span><a href="js-call://camera/cameraCallback"><span class="icon icon-plus"></span></a></span>
+      </div>
         <ul class="table-view">
           {% for p in places %}
           <li class="table-view-cell">
