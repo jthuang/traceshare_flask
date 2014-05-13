@@ -48,12 +48,10 @@
     </header>
 <!-- content starts here -->
     <div class="content">
-        <form>
-          <label name="title">Title</label><input type="text" name="title"></input>
-          <label name="desp">Description</label><input type="text" name="desp"></input>
-          <label name="photos">Upload Photo(s):</label>
-          <span><a href="js-call://photolibrary/photolibraryCallback"><span class="icon icon-plus"></span></a></span>
-        </form>
+         <label name="title">Title</label><input type="text" name="title"></input>
+         <label name="desp">Description</label><input type="text" name="desp"></input>
+         <label name="photos">Upload Photo(s):</label>
+         <span><a href="js-call://camera/cameraCallback"><span class="icon icon-plus"></span></a></span>
         <p class="label-description">Or choose place(s) you have been</p>
         <ul class="table-view">
           {% for p in places %}
